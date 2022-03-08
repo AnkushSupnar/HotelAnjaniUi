@@ -1,0 +1,55 @@
+.bodybg{
+     -fx-background-color: #3f51b5;
+     -fx-background-size: 100% 100%;
+  }
+  .combo-box{
+  -fx-font-size: 25;
+  -fx-font-family: 'kiran';
+   -fx-text-fill: #ffffff;
+  }
+  .button .glyph-icon{
+    -fx-fill:#ffffff;
+  }
+
+  .login{
+    -fx-font-size: 25;
+    -fx-font-family: 'kiran';
+    -fx-text-fill: #ffffff;
+    -fx-background-color:green;
+  }
+  .login:hover{
+      -fx-background-color:white;
+      -fx-text-fill: green;
+    }
+ .login:hover .glyph-icon{
+    -fx-fill: green;
+  }
+  .login:pressed .glyph-icon{
+      -fx-fill:#ffffff;
+  }
+  .login:pressed{
+     -fx-text-fill: #ffffff;
+     -fx-background-color:green;
+    }
+
+  .cancel{
+    -fx-font-size: 25;
+    -fx-font-family: 'kiran';
+    -fx-text-fill: #ffffff;
+    -fx-background-color:red;
+  }
+   .cancel:hover{
+        -fx-background-color:white;
+        -fx-text-fill: red;
+      }
+   .cancel:hover .glyph-icon{
+      -fx-fill: red;
+    }
+    .cancel:pressed{
+    -fx-text-fill: #ffffff;
+        -fx-background-color:red;
+    }
+    .cancel:pressed .glyph-icon{
+        -fx-fill: #ffffff;
+        }
+
