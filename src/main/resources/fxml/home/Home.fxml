@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/home.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.home.HomeController">
+   <left>
+      <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="256.0" styleClass="left" stylesheets="@../css/home.css" BorderPane.alignment="CENTER">
+         <children>
+            <FontAwesomeIcon glyphName="HOTEL" size="10em" />
+            <Label text="ha^Tola AMjanaI" textFill="WHITE">
+               <font>
+                  <Font name="Kiran" size="40.0" />
+               </font>
+            </Label>
+            <Accordion>
+              <panes>
+                <TitledPane animated="false" text="raojacao vyavahar">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0">
+                           <children>
+                              <VBox layoutX="22.0" layoutY="62.0" prefHeight="55.0" prefWidth="232.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <HBox fx:id="menuBilling" prefHeight="30.0" prefWidth="214.0" spacing="10.0" styleClass="menu" VBox.vgrow="NEVER">
+                                       <children>
+                                          <FontAwesomeIcon glyphName="TABLE" />
+                                          <Label text="DolaI ibalaIMga" HBox.hgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Kiran" size="25.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox fx:id="menuKirana" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="214.0" spacing="10.0" styleClass="menu">
+                                       <children>
+                                          <FontAwesomeIcon glyphName="TABLE" />
+                                          <Label text="ikraNaa yaadI" HBox.hgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Kiran" size="25.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children></AnchorPane>
+                  </content>
+                     <font>
+                        <Font name="Kiran" size="20.0" />
+                     </font>
+                </TitledPane>
+              </panes>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+               <effect>
+                  <ColorAdjust />
+               </effect>
+            </Accordion>
+         </children></VBox>
+   </left>
+</BorderPane>

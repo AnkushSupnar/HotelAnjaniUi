@@ -1,0 +1,6 @@
+.box{
+    -fx-background-color:white;
+    -fx-border-color:#ebe8f9;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}

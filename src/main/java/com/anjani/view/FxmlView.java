@@ -12,6 +12,16 @@ public enum FxmlView {
         public String getFxmlFile() {
             return "/fxml/home/Login.fxml";
         }
+    },
+    HOME {
+        @Override
+        String getTitle() {
+            return "Home Page";
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/home/Home.fxml";
+        }
     };
     abstract String getTitle();
     public abstract String getFxmlFile();

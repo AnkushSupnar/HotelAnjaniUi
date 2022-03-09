@@ -1,0 +1,54 @@
+.left{
+    -fx-background-color:#03dac6;
+}
+.label{
+    -fx-text-fill:#ffffff;
+}
+.left .glyph-icon{
+   -fx-fill:#ffffff;
+}
+
+.accordion .titled-pane > *.content{
+    -fx-background-color: transparent ;
+}
+.title-pane {
+  -fx-background-color: #ffffff;
+
+}
+
+.titled-pane > .title {
+  -fx-background-color: #03dac6;
+  -fx-text-fill: #130505;
+}
+
+.titled-pane:focused {
+  -fx-text-fill: white;
+}
+.titled-pane:focused > .title {
+  -fx-background-color: #bbaef7;
+  -fx-text-fill: #ebe8f9;
+}
+
+.menu {
+  -fx-background-color: #03dac6;
+  -fx-text-fill: #130505;
+}
+.menu:hover {
+  /*-fx-background-color : #10165F;*/
+  -fx-background-color: #8aa1e7;
+  -fx-text-fill: #ebe8f9;
+}
+.menu:hover .glyph-icon {
+    -fx-fill: #ebe8f9;
+  }
+
+.menu:pressed {
+  -fx-background-color: #03dac6;
+  -fx-text-fill: black;
+}
+.menu:pressed .glyph-icon{
+  -fx-fill: black;
+}
+.menu:pressed .label{
+  -fx-text-fill: black;
+}

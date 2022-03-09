@@ -1,0 +1,28 @@
+ .button{
+    -fx-font-size: 25;
+    -fx-font-family: 'kiran';
+    -fx-text-fill: #ffffff;
+    -fx-background-color:#6200ee;
+  }
+  .button .glyph-icon{
+      -fx-fill:#ffffff;
+    }
+
+
+  .button:hover{
+      -fx-background-color:white;
+      -fx-text-fill: #6200ee;
+      -fx-border-color:#6200ee;
+      -fx-border-radius:10px;
+      -fx-background-radius:10px;
+    }
+ .button:hover .glyph-icon{
+    -fx-fill: #6200ee;
+  }
+  .button:pressed .glyph-icon{
+      -fx-fill:#ffffff;
+  }
+  .button:pressed{
+     -fx-text-fill: #ffffff;
+     -fx-background-color:#6200ee;
+    }

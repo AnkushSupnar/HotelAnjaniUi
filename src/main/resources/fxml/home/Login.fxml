@@ -11,7 +11,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="462.0" prefWidth="589.0" styleClass="bodybg" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.LoginController">
+<AnchorPane fx:id="mainPane" prefHeight="462.0" prefWidth="589.0"
+            styleClass="bodybg" stylesheets="@../css/login.css"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.home.LoginController">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="177.0" prefHeight="469.0" prefWidth="589.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
