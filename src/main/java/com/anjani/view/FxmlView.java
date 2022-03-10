@@ -22,6 +22,16 @@ public enum FxmlView {
         public String getFxmlFile() {
             return "/fxml/home/Home.fxml";
         }
+    },
+    KIRANA {
+        @Override
+        String getTitle() {
+            return "Kirana Page";
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/transaction/Kirana.fxml";
+        }
     };
     abstract String getTitle();
     public abstract String getFxmlFile();

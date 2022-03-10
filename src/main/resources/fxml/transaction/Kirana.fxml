@@ -16,10 +16,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="707.0" prefWidth="871.0" stylesheets="@../css/box.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.transaction.KiranaController">
+<AnchorPane fx:id="mainPane" prefHeight="707.0" prefWidth="871.0" stylesheets="@../css/box.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.transaction.KiranaController">
    <children>
-      <SplitPane dividerPositions="0.7363699102829537" layoutX="175.0" layoutY="101.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.9146537842190016" layoutX="175.0" layoutY="101.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="498.0" prefWidth="674.0" SplitPane.resizableWithParent="false">
                <children>
@@ -30,76 +29,81 @@
                               <Font name="Kiran" size="25.0" />
                            </font>
                         </Label>
-                        <DatePicker layoutX="107.0" layoutY="26.0" prefHeight="30.0" styleClass="date-picker" />
+                        <DatePicker fx:id="date" layoutX="107.0" layoutY="26.0" prefHeight="30.0" styleClass="date-picker" />
                         <Label layoutX="14.0" layoutY="79.0" text="kIranaa dukana">
                            <font>
                               <Font name="Kiran" size="25.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="109.0" layoutY="72.0" prefWidth="330.0">
+                        <TextField fx:id="txtParty" layoutX="109.0" layoutY="72.0" prefWidth="330.0">
                            <font>
                               <Font name="Kiran" size="25.0" />
                            </font>
                         </TextField>
-                        <MFXRadioButton layoutX="314.0" layoutY="32.0" text="Bill" />
-                        <MFXRadioButton layoutX="378.0" layoutY="32.0" text="Quotation" />
+                        <MFXRadioButton fx:id="rdbtnBill" layoutX="314.0" layoutY="32.0" text="Bill" />
+                        <MFXRadioButton fx:id="rdbtnQuotation" layoutX="378.0" layoutY="32.0" text="Quotation" />
                      </children>
                   </Pane>
                   <Pane layoutX="5.0" layoutY="139.0" prefHeight="137.0" prefWidth="628.0" styleClass="box" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
                      <children>
-                        <Label layoutX="14.0" layoutY="5.0" text="maalaacao naava">
+                        <Label layoutX="214.0" layoutY="5.0" text="maalaacao naava">
                            <font>
                               <Font name="Kiran" size="25.0" />
                            </font>
                         </Label>
-                        <Label layoutX="348.0" layoutY="5.0" text="naga">
+                        <Label layoutX="498.0" layoutY="5.0" text="naga">
                            <font>
                               <Font name="Kiran" size="25.0" />
                            </font>
                         </Label>
                         <HBox layoutX="5.0" layoutY="30.0" spacing="5.0">
                            <children>
-                              <TextField prefHeight="39.0" prefWidth="247.0" promptText="maalaacao naava" styleClass="text-field">
+                              <TextField fx:id="txtCategory" layoutX="10.0" layoutY="10.0" prefHeight="39.0" prefWidth="200.0" promptText="maalaacao naava" styleClass="text-field">
                                  <font>
                                     <Font name="Kiran" size="25.0" />
                                  </font>
                               </TextField>
-                              <ComboBox prefHeight="38.0" prefWidth="74.0" promptText="Unit" />
-                              <TextField prefHeight="39.0" prefWidth="90.0" promptText="naga">
+                              <TextField fx:id="txtItemName" prefHeight="39.0" prefWidth="200.0" promptText="maalaacao naava" styleClass="text-field">
                                  <font>
                                     <Font name="Kiran" size="25.0" />
                                  </font>
                               </TextField>
-                              <TextField prefHeight="39.0" prefWidth="90.0" promptText="Baava">
+                              <ComboBox fx:id="cmbUnit" prefHeight="38.0" prefWidth="74.0" promptText="Unit" />
+                              <TextField fx:id="txtQty" prefHeight="39.0" prefWidth="90.0" promptText="naga">
                                  <font>
                                     <Font name="Kiran" size="25.0" />
                                  </font>
                               </TextField>
-                              <TextField prefHeight="39.0" prefWidth="90.0" promptText="Baava">
+                              <TextField fx:id="txtRate" prefHeight="39.0" prefWidth="90.0" promptText="Baava">
+                                 <font>
+                                    <Font name="Kiran" size="25.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="txtAmount" prefHeight="39.0" prefWidth="90.0" promptText="Baava">
                                  <font>
                                     <Font name="Kiran" size="25.0" />
                                  </font>
                               </TextField>
                            </children>
                         </HBox>
-                        <Label layoutX="435.0" layoutY="5.0" text="Baava">
+                        <Label layoutX="591.0" layoutY="5.0" text="Baava">
                            <font>
                               <Font name="Kiran" size="25.0" />
                            </font>
                         </Label>
-                        <Label layoutX="265.0" layoutY="5.0" text="yauinaT">
+                        <Label layoutX="414.0" layoutY="5.0" text="yauinaT">
                            <font>
                               <Font name="Kiran" size="25.0" />
                            </font>
                         </Label>
-                        <Label layoutX="525.0" layoutY="5.0" text="ikMmata">
+                        <Label layoutX="686.0" layoutY="5.0" text="ikMmata">
                            <font>
                               <Font name="Kiran" size="25.0" />
                            </font>
                         </Label>
                         <HBox layoutX="14.0" layoutY="86.0" spacing="10.0">
                            <children>
-                              <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="A^D">
+                              <Button fx:id="btnAdd" mnemonicParsing="false" stylesheets="@../css/button.css" text="A^D">
                                  <font>
                                     <Font name="Kiran" size="25.0" />
                                  </font>
@@ -107,7 +111,7 @@
                                     <FontAwesomeIcon glyphName="PLUS" size="0.7em" />
                                  </graphic>
                               </Button>
-                              <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="irmauvh">
+                              <Button fx:id="btnRemove" mnemonicParsing="false" stylesheets="@../css/button.css" text="irmauvh">
                                  <font>
                                     <Font name="Kiran" size="25.0" />
                                  </font>
@@ -115,7 +119,7 @@
                                     <FontAwesomeIcon glyphName="CLOSE" size="0.7em" />
                                  </graphic>
                               </Button>
-                              <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="ApaDoT">
+                              <Button fx:id="btnUpdate" mnemonicParsing="false" stylesheets="@../css/button.css" text="ApaDoT">
                                  <font>
                                     <Font name="Kiran" size="25.0" />
                                  </font>
@@ -123,7 +127,7 @@
                                     <FontAwesomeIcon glyphName="EDIT" size="0.7em" />
                                  </graphic>
                               </Button>
-                              <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="i@laAr">
+                              <Button fx:id="btnClear" mnemonicParsing="false" stylesheets="@../css/button.css" text="i@laAr">
                                  <font>
                                     <Font name="Kiran" size="25.0" />
                                  </font>
@@ -133,43 +137,48 @@
                               </Button>
                            </children>
                         </HBox>
+                        <Label layoutX="11.0" layoutY="7.0" text="k^TogaIrI">
+                           <font>
+                              <Font name="Kiran" size="25.0" />
+                           </font>
+                        </Label>
                      </children>
                   </Pane>
-                  <TableView layoutX="6.0" layoutY="280.0" prefHeight="309.0" prefWidth="626.0" stylesheets="@../css/table.css" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="117.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="280.0">
+                  <TableView fx:id="tableTr" layoutX="6.0" layoutY="280.0" prefHeight="309.0" prefWidth="626.0" stylesheets="@../css/table.css" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="117.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="280.0">
                     <columns>
-                      <TableColumn prefWidth="44.00003242492676" text="SR.NO" />
-                      <TableColumn prefWidth="260.80001068115234" text="ITEM NAME" />
-                        <TableColumn prefWidth="53.60003662109375" text="UNIT" />
-                        <TableColumn prefWidth="68.0" text="QUANTITY" />
-                        <TableColumn prefWidth="88.79998779296875" text="RATE" />
-                        <TableColumn prefWidth="94.4000244140625" text="AMOUNT" />
+                      <TableColumn fx:id="coSrNo" prefWidth="44.00003242492676" text="SR.NO" />
+                      <TableColumn fx:id="colItemName" prefWidth="295.1999931335449" text="ITEM NAME" />
+                        <TableColumn fx:id="colUnit" prefWidth="84.0" text="UNIT" />
+                        <TableColumn fx:id="colQty" prefWidth="101.5999755859375" text="QUANTITY" />
+                        <TableColumn fx:id="colRate" prefWidth="108.79998779296875" text="RATE" />
+                        <TableColumn fx:id="coAmount" prefWidth="132.7999267578125" text="AMOUNT" />
                     </columns>
                   </TableView>
                   <Pane layoutX="5.0" layoutY="584.0" prefHeight="108.0" prefWidth="628.0" styleClass="box" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
                      <children>
                         <HBox layoutX="14.0" layoutY="5.0" spacing="10.0">
                            <children>
-                              <MFXTextField floatMode="BORDER" floatingText="Net Total" prefWidth="120.0">
+                              <MFXTextField fx:id="txtNetTotal" floatMode="BORDER" floatingText="Net Total" prefWidth="120.0">
                                  <font>
                                     <Font name="Kiran" size="14.0" />
                                  </font>
                               </MFXTextField>
-                              <MFXTextField floatMode="BORDER" floatingText="Transporting" prefWidth="105.0">
+                              <MFXTextField fx:id="txtTransporting" floatMode="BORDER" floatingText="Transporting" prefWidth="105.0">
                                  <font>
                                     <Font name="Kiran" size="14.0" />
                                  </font>
                               </MFXTextField>
-                              <MFXTextField floatMode="BORDER" floatingText="Other" prefWidth="105.0">
+                              <MFXTextField fx:id="txtOther" floatMode="BORDER" floatingText="Other" prefWidth="105.0">
                                  <font>
                                     <Font name="Kiran" size="14.0" />
                                  </font>
                               </MFXTextField>
-                              <MFXTextField floatMode="BORDER" floatingText="Discount" prefWidth="105.0">
+                              <MFXTextField fx:id="txtDiscount" floatMode="BORDER" floatingText="Discount" prefWidth="105.0">
                                  <font>
                                     <Font name="Kiran" size="14.0" />
                                  </font>
                               </MFXTextField>
-                              <MFXTextField floatMode="BORDER" floatingText="Grand Total" prefWidth="120.0">
+                              <MFXTextField fx:id="txtGrandTotal" floatMode="BORDER" floatingText="Grand Total" prefWidth="120.0">
                                  <font>
                                     <Font name="Kiran" size="14.0" />
                                  </font>
@@ -178,7 +187,7 @@
                         </HBox>
                         <HBox layoutX="14.0" layoutY="55.0" spacing="10.0">
                            <children>
-                              <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="saovh">
+                              <Button fx:id="btnSave" mnemonicParsing="false" stylesheets="@../css/button.css" text="saovh">
                                  <font>
                                     <Font name="Kiran" size="25.0" />
                                  </font>
@@ -186,7 +195,7 @@
                                     <FontAwesomeIcon glyphName="SAVE" size="0.7em" />
                                  </graphic>
                               </Button>
-                              <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="kaoToSana">
+                              <Button fx:id="btnQuotation" mnemonicParsing="false" stylesheets="@../css/button.css" text="kaoToSana">
                                  <font>
                                     <Font name="Kiran" size="25.0" />
                                  </font>
@@ -194,7 +203,7 @@
                                     <FontAwesomeIcon glyphName="CLOSE" size="0.7em" />
                                  </graphic>
                               </Button>
-                              <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="ApaDoT">
+                              <Button fx:id="btnUpdatebill" mnemonicParsing="false" stylesheets="@../css/button.css" text="ApaDoT">
                                  <font>
                                     <Font name="Kiran" size="25.0" />
                                  </font>
@@ -202,7 +211,7 @@
                                     <FontAwesomeIcon glyphName="EDIT" size="0.7em" />
                                  </graphic>
                               </Button>
-                              <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="i@laAr">
+                              <Button fx:id="btnClearBill" mnemonicParsing="false" stylesheets="@../css/button.css" text="i@laAr">
                                  <font>
                                     <Font name="Kiran" size="25.0" />
                                  </font>
@@ -210,7 +219,7 @@
                                     <FontAwesomeIcon glyphName="RECYCLE" size="0.7em" />
                                  </graphic>
                               </Button>
-                              <Button layoutX="326.0" layoutY="10.0" mnemonicParsing="false" stylesheets="@../css/button.css" text="baahor">
+                              <Button fx:id="btnHome" layoutX="326.0" layoutY="10.0" mnemonicParsing="false" stylesheets="@../css/button.css" text="baahor">
                                  <font>
                                     <Font name="Kiran" size="25.0" />
                                  </font>
