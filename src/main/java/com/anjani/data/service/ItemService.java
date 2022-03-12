@@ -38,6 +38,9 @@ public class ItemService {
     public Item saveItem(Item item){
         return template.postForObject(CommonData.url+"/item/save",item,Item.class);
     }
-
+    public List<String>getItemNamesByCategoryName(String catname){
+        return Arrays.asList(
+                template.getForObject(CommonData.url+"/item/bycategoryname/{name}",String[].class,catname));
+    }
 
 }

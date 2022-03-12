@@ -22,7 +22,6 @@ public class CategoryService {
         this.template = restTemplateBuilder
                 .errorHandler(new RestTemplateResponseErrorHandler()).build();
     }
-
     public Category saveCategory(Category category){
         return template.postForObject(
                 CommonData.url + "/category/save",category,Category.class);

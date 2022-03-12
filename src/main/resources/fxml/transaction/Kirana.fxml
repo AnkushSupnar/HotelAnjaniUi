@@ -42,6 +42,14 @@
                         </TextField>
                         <MFXRadioButton fx:id="rdbtnBill" layoutX="314.0" layoutY="32.0" text="Bill" />
                         <MFXRadioButton fx:id="rdbtnQuotation" layoutX="378.0" layoutY="32.0" text="Quotation" />
+                        <Button fx:id="btnSearch" layoutX="444.0" layoutY="71.0" mnemonicParsing="false" stylesheets="@../css/button.css" text="paha">
+                           <font>
+                              <Font name="Kiran" size="25.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIcon glyphName="SEARCH" size="0.7em" />
+                           </graphic>
+                        </Button>
                      </children>
                   </Pane>
                   <Pane layoutX="5.0" layoutY="139.0" prefHeight="137.0" prefWidth="628.0" styleClass="box" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
