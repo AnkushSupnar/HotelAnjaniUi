@@ -18,7 +18,7 @@
 
 <AnchorPane fx:id="mainPane" prefHeight="707.0" prefWidth="871.0" stylesheets="@../css/box.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.transaction.KiranaController">
    <children>
-      <SplitPane dividerPositions="0.9146537842190016" layoutX="175.0" layoutY="101.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.9560616517138256" layoutX="175.0" layoutY="101.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="498.0" prefWidth="674.0" SplitPane.resizableWithParent="false">
                <children>
@@ -76,7 +76,7 @@
                                     <Font name="Kiran" size="25.0" />
                                  </font>
                               </TextField>
-                              <ComboBox fx:id="cmbUnit" prefHeight="38.0" prefWidth="74.0" promptText="Unit" />
+                              <ComboBox fx:id="cmbUnit" prefHeight="38.0" prefWidth="110.0" stylesheets="@../css/combobox.css" HBox.hgrow="NEVER" />
                               <TextField fx:id="txtQty" prefHeight="39.0" prefWidth="90.0" promptText="naga">
                                  <font>
                                     <Font name="Kiran" size="25.0" />
@@ -87,7 +87,7 @@
                                     <Font name="Kiran" size="25.0" />
                                  </font>
                               </TextField>
-                              <TextField fx:id="txtAmount" prefHeight="39.0" prefWidth="90.0" promptText="Baava">
+                              <TextField fx:id="txtAmount" editable="false" prefHeight="39.0" prefWidth="90.0" promptText="Baava">
                                  <font>
                                     <Font name="Kiran" size="25.0" />
                                  </font>
@@ -155,11 +155,11 @@
                   <TableView fx:id="tableTr" layoutX="6.0" layoutY="280.0" prefHeight="309.0" prefWidth="626.0" stylesheets="@../css/table.css" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="117.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="280.0">
                     <columns>
                       <TableColumn fx:id="coSrNo" prefWidth="44.00003242492676" text="SR.NO" />
-                      <TableColumn fx:id="colItemName" prefWidth="295.1999931335449" text="ITEM NAME" />
-                        <TableColumn fx:id="colUnit" prefWidth="84.0" text="UNIT" />
-                        <TableColumn fx:id="colQty" prefWidth="101.5999755859375" text="QUANTITY" />
-                        <TableColumn fx:id="colRate" prefWidth="108.79998779296875" text="RATE" />
-                        <TableColumn fx:id="coAmount" prefWidth="132.7999267578125" text="AMOUNT" />
+                      <TableColumn fx:id="colItemName" prefWidth="341.5999565124512" text="ITEM NAME" />
+                        <TableColumn fx:id="colUnit" prefWidth="109.60003662109375" text="UNIT" />
+                        <TableColumn fx:id="colQty" prefWidth="69.60003662109375" text="QUANTITY" />
+                        <TableColumn fx:id="colRate" prefWidth="112.79998779296875" text="RATE" />
+                        <TableColumn fx:id="coAmount" prefWidth="124.79998779296875" text="AMOUNT" />
                     </columns>
                   </TableView>
                   <Pane layoutX="5.0" layoutY="584.0" prefHeight="108.0" prefWidth="628.0" styleClass="box" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
