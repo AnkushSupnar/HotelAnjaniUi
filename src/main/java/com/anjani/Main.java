@@ -38,7 +38,7 @@ public class Main extends Application {
         springContext.close();
     }
     protected void displayInitialScene() {
-        stageManager.switchScene(FxmlView.KIRANA);
+        stageManager.switchScene(FxmlView.LOGIN);
         //stageManager.switchScene(FxmlView.);
         //stageManager.switchScene(FxmlView.HOME);
     }

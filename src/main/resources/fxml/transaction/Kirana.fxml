@@ -16,9 +16,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="707.0" prefWidth="871.0" stylesheets="@../css/box.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.transaction.KiranaController">
+<AnchorPane fx:id="mainPane" prefHeight="707.0" prefWidth="1191.0" stylesheets="@../css/box.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.transaction.KiranaController">
    <children>
-      <SplitPane dividerPositions="0.9560616517138256" layoutX="175.0" layoutY="101.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.6996805111821086" layoutX="175.0" layoutY="101.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="498.0" prefWidth="674.0" SplitPane.resizableWithParent="false">
                <children>
@@ -203,12 +203,12 @@
                                     <FontAwesomeIcon glyphName="SAVE" size="0.7em" />
                                  </graphic>
                               </Button>
-                              <Button fx:id="btnQuotation" mnemonicParsing="false" stylesheets="@../css/button.css" text="kaoToSana">
+                              <Button fx:id="btnQuotation" mnemonicParsing="false" stylesheets="@../css/button.css" text="ipa`MT">
                                  <font>
                                     <Font name="Kiran" size="25.0" />
                                  </font>
                                  <graphic>
-                                    <FontAwesomeIcon glyphName="CLOSE" size="0.7em" />
+                                    <FontAwesomeIcon glyphName="PRINT" size="0.7em" />
                                  </graphic>
                               </Button>
                               <Button fx:id="btnUpdatebill" mnemonicParsing="false" stylesheets="@../css/button.css" text="ApaDoT">
@@ -241,7 +241,17 @@
                   </Pane>
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <TableView fx:id="tableOldBill" layoutX="64.0" layoutY="76.0" prefHeight="630.0" prefWidth="354.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="76.0">
+                    <columns>
+                      <TableColumn fx:id="colBillNo" prefWidth="52.79998779296875" text="BILL NO" />
+                      <TableColumn fx:id="colDate" prefWidth="97.60003662109375" text="DATE" />
+                        <TableColumn fx:id="colPartyName" prefWidth="115.20001220703125" text="PARTY NAME" />
+                        <TableColumn fx:id="colBillAmount" prefWidth="115.20001220703125" text="AMOUNT" />
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
         </items>
       </SplitPane>
    </children>

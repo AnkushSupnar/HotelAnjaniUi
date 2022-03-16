@@ -6,6 +6,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -16,8 +19,15 @@
    <left>
       <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="256.0" styleClass="left" stylesheets="@../css/home.css" BorderPane.alignment="CENTER">
          <children>
-            <FontAwesomeIcon glyphName="HOTEL" size="10em" />
-            <Label text="ha^Tola AMjanaI" textFill="WHITE">
+            <ImageView fitHeight="205.0" fitWidth="157.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+               <image>
+                  <Image url="@../../../../../../../HotelAnjani/logo.jpeg" />
+               </image>
+               <effect>
+                  <Glow />
+               </effect>
+            </ImageView>
+            <Label text="ha^Tola AMjanaI" textFill="#2b0202">
                <font>
                   <Font name="Kiran" size="40.0" />
                </font>
@@ -33,7 +43,7 @@
                                     <HBox fx:id="menuBilling" prefHeight="30.0" prefWidth="214.0" spacing="10.0" styleClass="menu" VBox.vgrow="NEVER">
                                        <children>
                                           <FontAwesomeIcon glyphName="TABLE" />
-                                          <Label text="DolaI ibalaIMga" HBox.hgrow="ALWAYS">
+                                          <Label styleClass="name" text="DolaI ibalaIMga" HBox.hgrow="ALWAYS">
                                              <font>
                                                 <Font name="Kiran" size="25.0" />
                                              </font>
@@ -43,7 +53,7 @@
                                     <HBox fx:id="menuKirana" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="214.0" spacing="10.0" styleClass="menu">
                                        <children>
                                           <FontAwesomeIcon glyphName="TABLE" />
-                                          <Label text="ikraNaa yaadI" HBox.hgrow="ALWAYS">
+                                          <Label styleClass="name" text="ikraNaa yaadI" HBox.hgrow="ALWAYS">
                                              <font>
                                                 <Font name="Kiran" size="25.0" />
                                              </font>

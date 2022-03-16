@@ -8,12 +8,14 @@ import com.anjani.data.service.CategoryService;
 import com.anjani.data.service.ItemService;
 import com.anjani.data.service.KiranaService;
 import com.anjani.data.service.PurchasePartyService;
+import com.anjani.print.PrintKiranaQuotation;
 import com.anjani.view.AlertNotification;
 import com.anjani.view.StageManager;
 import impl.org.controlsfx.autocompletion.SuggestionProvider;
 import impl.org.controlsfx.skin.AutoCompletePopup;
 import io.github.palexdev.materialfx.controls.MFXRadioButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -25,6 +27,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
+import org.apache.tomcat.jni.Local;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +57,14 @@ public class KiranaController implements Initializable {
     @FXML private TableColumn<KiranaTransaction, Float> colRate;
     @FXML private TableColumn<KiranaTransaction,String> colUnit;
     @FXML private DatePicker date;
+
+    @FXML private TableView<Kirana> tableOldBill;
+    @FXML private TableColumn<Kirana,Float> colBillAmount;
+    @FXML private TableColumn<Kirana,Long> colBillNo;
+    @FXML private TableColumn<Kirana, LocalDate> colDate;
+    @FXML private TableColumn<Kirana,String> colPartyName;
+
+
     private ToggleGroup group;
     @FXML private MFXRadioButton rdbtnBill;
     @FXML private MFXRadioButton rdbtnQuotation;
@@ -68,16 +79,20 @@ public class KiranaController implements Initializable {
     @Autowired private PurchasePartyService partyService;
     @Autowired private AlertNotification alert;
     @Autowired private KiranaService kiranaService;
+    @Autowired private PrintKiranaQuotation printBill;
     private SuggestionProvider<String>categoryNames;
     private SuggestionProvider<String>itemNames;
     private SuggestionProvider<String>partyNames;
     private ObservableList<KiranaTransaction>trList = FXCollections.observableArrayList();
+    private ObservableList<Kirana>billList = FXCollections.observableArrayList();
     private PurchaseParty party;
     private Item item;
+    private Long id;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         party = null;
         item=null;
+        id=null;
         categoryNames = SuggestionProvider.create(categoryService.getAllCategoryNames());
         AutoCompletionBinding<String> autoComplete = TextFields.bindAutoCompletion(txtCategory,categoryNames);
         autoComplete.prefWidthProperty().bind(this.txtCategory.widthProperty());
@@ -120,11 +135,102 @@ public class KiranaController implements Initializable {
                 };
             }
         });
+
         colQty.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         colRate.setCellValueFactory(new PropertyValueFactory<>("rate"));
         colUnit.setCellValueFactory(new PropertyValueFactory<>("unit"));
         tableTr.setItems(trList);
 
+        colBillAmount.setCellValueFactory(new PropertyValueFactory<>("grandtotal"));
+        colBillAmount.setCellFactory(new Callback<TableColumn<Kirana,Float>, TableCell<Kirana,Float>>() {
+            @Override
+            public TableCell call(TableColumn param) {
+                return new TableCell<Kirana, Float>()
+                {
+                    @Override
+                    public void updateItem(Float item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if(isEmpty())
+                        {
+                            setText("");
+                        }
+                        else
+                        {
+                            setFont(Font.font ("Arial", 16));
+                            setText(item.toString());
+                        }
+                    }
+                };
+            }
+        });
+        colBillNo.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colBillNo.setCellFactory(new Callback<TableColumn<Kirana,Long>, TableCell<Kirana,Long>>() {
+            @Override
+            public TableCell call(TableColumn param) {
+                return new TableCell<Kirana, Long>()
+                {
+                    @Override
+                    public void updateItem(Long item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if(isEmpty())
+                        {
+                            setText("");
+                        }
+                        else
+                        {
+                            setFont(Font.font ("Arial", 16));
+                            setText(item.toString());
+                        }
+                    }
+                };
+            }
+        });
+        colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        colDate.setCellFactory(new Callback<TableColumn<Kirana,LocalDate>, TableCell<Kirana,LocalDate>>() {
+            @Override
+            public TableCell call(TableColumn param) {
+                return new TableCell<Kirana, LocalDate>()
+                {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if(isEmpty())
+                        {
+                            setText("");
+                        }
+                        else
+                        {
+                            setFont(Font.font ("Arial", 16));
+                            setText(item.toString());
+                        }
+                    }
+                };
+            }
+        });
+        colPartyName.setCellValueFactory(cellData->new SimpleStringProperty(cellData.getValue().getParty().getName()));
+        colPartyName.setCellFactory(new Callback<TableColumn<Kirana,String>, TableCell<Kirana,String>>() {
+            @Override
+            public TableCell call(TableColumn param) {
+                return new TableCell<KiranaTransaction, String>()
+                {
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if(isEmpty())
+                        {
+                            setText("");
+                        }
+                        else
+                        {
+                            setFont(Font.font ("kiran", 25));
+                            setText(item);
+                        }
+                    }
+                };
+            }
+        });
+        billList.addAll(kiranaService.getAllKirana());
+        tableOldBill.setItems(billList);
 
         cmbUnit.getItems().add("ik.ga`a.");
         cmbUnit.getItems().add("naga");
@@ -224,6 +330,7 @@ public class KiranaController implements Initializable {
             }
         });
         group = new ToggleGroup();
+
         rdbtnBill.setToggleGroup(group);
         rdbtnQuotation.setToggleGroup(group);
         btnAdd.setOnAction(e->add());
@@ -231,6 +338,62 @@ public class KiranaController implements Initializable {
         btnUpdate.setOnAction(e->update());
         btnClear.setOnAction(e->clear());
         btnSave.setOnAction(e->save());
+        btnUpdatebill.setOnAction(e->updateBill());
+        btnClearBill.setOnAction(e->clearBill());
+        btnQuotation.setOnAction(e->print());
+    }
+
+    private void print() {
+        if(tableOldBill.getSelectionModel().getSelectedItem()==null)return;
+        printBill.setKirana(kiranaService.getById(tableOldBill.getSelectionModel().getSelectedItem().getId()));
+        printBill.print();
+    }
+
+    private void clearBill() {
+        date.setValue(LocalDate.now());
+        txtParty.setText("");
+        //btnSearch.fire();
+        btnSearch.setStyle("-fx-background-color:red;");
+        trList.clear();
+        txtNetTotal.setText(""+0.0f);
+        txtOther.setText(""+0.0f);
+        txtTransporting.setText(""+0.0f);
+        txtDiscount.setText(""+0.0f);
+        txtGrandTotal.setText(""+0.0f);
+        rdbtnBill.setSelected(false);
+        rdbtnQuotation.setSelected(false);
+        clear();
+        id = null;
+    }
+
+    private void updateBill()
+    {
+        if(tableOldBill.getSelectionModel().getSelectedItem()==null) return;
+        Kirana kirana = kiranaService.getById(tableOldBill.getSelectionModel().getSelectedItem().getId());
+        if(kirana!=null) {
+            id = kirana.getId();
+            date.setValue(kirana.getDate());
+            trList.clear();
+
+           // trList.addAll(kirana.getKiranaTransactions());
+            Long i= Long.valueOf(0);
+            for(KiranaTransaction tr: kirana.getKiranaTransactions()){
+                tr.setId(++i);
+                trList.add(tr);
+            }
+            txtNetTotal.setText(String.valueOf(kirana.getNettotal()));
+            txtTransporting.setText(String.valueOf(kirana.getTransaport()));
+            txtDiscount.setText(String.valueOf(kirana.getDiscount()));
+            txtOther.setText(String.valueOf(kirana.getOther()));
+            txtGrandTotal.setText(String.valueOf(kirana.getGrandtotal()));
+            txtParty.setText(kirana.getParty().getName());
+            btnSearch.fire();
+            if (kirana.getGrandtotal() <= 0.0f) {
+                rdbtnQuotation.setSelected(true);
+            }
+            else
+                rdbtnBill.setSelected(true);
+        }
     }
     private void save(){
         if(!validateBill())return;
@@ -245,6 +408,9 @@ public class KiranaController implements Initializable {
                 .kiranaTransactions(new ArrayList<>())
                 .paid(0.0f)
                 .build();
+        if(id!=null){
+            kirana.setId(id);
+        }
         for(KiranaTransaction tr:trList){
             tr.setId(null);
             tr.setKirana(kirana);
@@ -255,11 +421,11 @@ public class KiranaController implements Initializable {
         kirana.getKiranaTransactions().stream().forEach(e-> System.out.println(e.getKirana().getDate()));
         if(kiranaService.save(kirana)!=null){
             alert.showSuccess("Kirana Save Success");
+            clearBill();
         }
 
         //System.out.println(kirana);
     }
-
     private boolean validateBill() {
         if(trList.isEmpty()){
             alert.showError("No Data To Save");
@@ -276,7 +442,6 @@ public class KiranaController implements Initializable {
         }
         return true;
     }
-
     private void clear(){
         txtCategory.setText("");
         txtItemName.setText("");
@@ -317,10 +482,23 @@ public class KiranaController implements Initializable {
                 .build();
 
         addInTrList(tr);
-        rdbtnQuotation.setDisable(true);
-        rdbtnBill.setDisable(true);
+        if(id==null) {
+            rdbtnQuotation.setDisable(true);
+            rdbtnBill.setDisable(true);
+        }
+        else{
+            rdbtnQuotation.setDisable(false);
+            rdbtnBill.setDisable(false);
+        }
     }
     private void addInTrList(KiranaTransaction tr) {
+        if(trList.size()==0){
+            tr.setId(1L);
+            trList.add(tr);
+            if(tr.getRate()>0.0f){
+                rdbtnQuotation.setSelected(true);
+            }
+        }
         int index=-1;
         for(KiranaTransaction t:trList){
             if(t.getItemname().equals(tr.getItemname())){
@@ -409,5 +587,6 @@ public class KiranaController implements Initializable {
         }
         return true;
     }
+
 }
 

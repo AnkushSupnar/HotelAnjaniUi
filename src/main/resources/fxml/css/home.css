@@ -1,11 +1,11 @@
 .left{
-    -fx-background-color:#03dac6;
+    -fx-background-color:#ffffff;
 }
-.label{
-    -fx-text-fill:#ffffff;
+.name{
+    -fx-text-fill:black;
 }
 .left .glyph-icon{
-   -fx-fill:#ffffff;
+   -fx-fill:black;
 }
 
 .accordion .titled-pane > *.content{
@@ -17,30 +17,34 @@
 }
 
 .titled-pane > .title {
-  -fx-background-color: #03dac6;
-  -fx-text-fill: #130505;
+  -fx-background-color: #ffffff;
+  -fx-text-fill: black;
 }
 
 .titled-pane:focused {
-  -fx-text-fill: white;
+-fx-background-color: #ffffff;
+  -fx-text-fill: black;
 }
 .titled-pane:focused > .title {
-  -fx-background-color: #bbaef7;
-  -fx-text-fill: #ebe8f9;
+  -fx-background-color: #ffffff;
+  -fx-text-fill: black;
 }
 
 .menu {
-  -fx-background-color: #03dac6;
-  -fx-text-fill: #130505;
+  -fx-background-color: #ffffff;
+  -fx-text-fill: black;
 }
 .menu:hover {
   /*-fx-background-color : #10165F;*/
   -fx-background-color: #8aa1e7;
-  -fx-text-fill: #ebe8f9;
+  -fx-text-fill: white;
 }
 .menu:hover .glyph-icon {
     -fx-fill: #ebe8f9;
-  }
+ }
+ .menu:hover .name {
+    -fx-text-fill: white;
+ }
 
 .menu:pressed {
   -fx-background-color: #03dac6;
