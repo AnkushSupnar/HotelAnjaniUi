@@ -1,10 +1,7 @@
 package com.anjani.data.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
-
 
 import java.time.LocalDate;
 import java.util.ArrayList;

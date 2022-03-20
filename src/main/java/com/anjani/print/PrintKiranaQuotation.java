@@ -5,7 +5,6 @@ import com.anjani.data.entity.KiranaTransaction;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import org.springframework.stereotype.Component;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -16,8 +15,8 @@ import java.time.format.DateTimeFormatter;
 public class PrintKiranaQuotation {
     private  Kirana kirana;
     Document doc;
-    String fileName = "D:\\HotelAnjani\\bill.pdf";
-    public static final String fontname = "D:\\Shopee\\kiran.ttf";
+    String fileName = "D:\\HotelAnjani\\kiranabill.pdf";
+    public static final String fontname = "D:\\HotelAnjani\\kiran.ttf";
     Font f1 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 30f, Font.BOLD);//, BaseColor.BLACK);
     Font f2 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 28f, Font.NORMAL, BaseColor.BLUE);
     Font f3 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 20f, Font.BOLD, BaseColor.BLACK);
@@ -35,6 +34,7 @@ public class PrintKiranaQuotation {
             createDocument(addData());
             doc.close();
             System.out.println("Print Done");
+            new PrintFile().openFile(fileName);
         } catch (Exception e) {
             e.printStackTrace();
         }

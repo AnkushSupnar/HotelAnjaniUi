@@ -1,4 +1,5 @@
 package com.anjani.controller.home;
+import com.anjani.data.common.CommonData;
 import com.anjani.data.entity.Login;
 import com.anjani.data.service.LoginService;
 import com.anjani.view.AlertNotification;
@@ -32,7 +33,7 @@ public class LoginController implements Initializable {
     @Autowired private AlertNotification alert;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        CommonData.readFile();
         cmbUserName.getItems().addAll(loginService.getAllUserNames());
         btnLogin.setOnAction(e->login());
 

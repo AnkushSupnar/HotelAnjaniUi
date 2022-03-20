@@ -7,7 +7,7 @@ import java.util.Properties;
 
 @Component
 public class CommonData {
-    public static String url="http://localhost:8080/";
+    public static String url;//="http://localhost:8080/";
     public static void readFile()
     {
         try {
@@ -15,6 +15,7 @@ public class CommonData {
             Properties prop = new Properties();
             prop.load(reader);
             url = prop.getProperty("url");
+            System.out.println("Property Read Success "+url);
         }catch(Exception e){
             e.printStackTrace();
         }

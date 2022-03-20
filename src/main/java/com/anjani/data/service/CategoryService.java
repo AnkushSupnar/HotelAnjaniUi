@@ -16,21 +16,26 @@ import java.util.List;
 @Service
 public class CategoryService {
     private RestTemplate template;
+    private String url =null;
+
 
     @Autowired
     public CategoryService(RestTemplateBuilder restTemplateBuilder) {
         this.template = restTemplateBuilder
                 .errorHandler(new RestTemplateResponseErrorHandler()).build();
+        CommonData.readFile();
+        url =  CommonData.url;
     }
     public Category saveCategory(Category category){
         return template.postForObject(
                 CommonData.url + "/category/save",category,Category.class);
     }
     public List<Category> getAllCategories(){
-        return Arrays.asList(template.getForObject(CommonData.url+"/category/getall",Category[].class));
+        return Arrays.asList(template.getForObject(url+"/category/getall",Category[].class));
     }
     public List<String>getAllCategoryNames(){
-        return Arrays.asList(template.getForObject(CommonData.url+"/category/allnames",String[].class));
+        System.out.println(url+"/category/allname");
+        return Arrays.asList(template.getForObject(url+"/category/allnames",String[].class));
     }
     public Category getById(Long id){
         return template.getForObject(CommonData.url+"/category/byid/{id}",Category.class,id);

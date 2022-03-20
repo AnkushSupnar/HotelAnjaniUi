@@ -21,7 +21,7 @@
          <children>
             <ImageView fitHeight="205.0" fitWidth="157.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
                <image>
-                  <Image url="@../../../../../../../HotelAnjani/logo.jpeg" />
+                  <Image url="@../images/logo.jpeg" />
                </image>
                <effect>
                   <Glow />

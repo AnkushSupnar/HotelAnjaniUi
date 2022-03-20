@@ -1,5 +1,6 @@
 package com.anjani;
 
+import com.anjani.data.common.CommonData;
 import com.anjani.view.FxmlView;
 import com.anjani.view.StageManager;
 import javafx.application.Application;
@@ -18,6 +19,7 @@ public class Main extends Application {
     public static void main(String[] args) {
 
         Application.launch(args);
+        //CommonData.readFile();
         //SpringApplication.run(Main.class, args);
     }
 

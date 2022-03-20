@@ -1,6 +1,7 @@
 package com.anjani.controller.home;
 
 import com.anjani.config.SpringFXMLLoader;
+import com.anjani.view.FxmlView;
 import com.anjani.view.StageManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -33,8 +34,9 @@ public class HomeController implements Initializable {
             System.out.println("clicked");
         });
         menuKirana.setOnMouseClicked(e->{
-            center = stageManager.getFxmlLoader().getPage("/fxml/transaction/Kirana.fxml");
-            mainPane.setCenter(center);
+            stageManager.switchScene(FxmlView.KIRANA);
+          //  center = stageManager.getFxmlLoader().getPage("/fxml/transaction/Kirana.fxml");
+            //mainPane.setCenter(center);
         });
     }
 }

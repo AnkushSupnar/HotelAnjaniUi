@@ -29,7 +29,9 @@ public class KiranaService {
 
     }
     public List<Kirana>getByDate(LocalDate date){
-        return Arrays.asList(template.getForObject(CommonData.url+"/kirana/bydate/{date}",Kirana[].class,date));
+        System.out.println(CommonData.url+"/kirana/bydate/"+date);
+      // return null;
+         return Arrays.asList(template.getForObject(CommonData.url+"/kirana/bydate/{date}",Kirana[].class,date));
     }
     public List<Kirana>getByPartyName(String party){
         return Arrays.asList(template.getForObject(CommonData.url+"/kirana/bypartyname/{party}",Kirana[].class,party));
