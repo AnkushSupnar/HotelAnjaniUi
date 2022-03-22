@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/home.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.home.HomeController">
+<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="634.0" prefWidth="746.0" stylesheets="@../css/home.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.home.HomeController">
    <left>
       <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="256.0" styleClass="left" stylesheets="@../css/home.css" BorderPane.alignment="CENTER">
          <children>
@@ -68,6 +68,41 @@
                         <Font name="Kiran" size="20.0" />
                      </font>
                 </TitledPane>
+                  <TitledPane animated="false" layoutX="10.0" layoutY="10.0" text="naivana banavaa">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0">
+                           <children>
+                              <VBox layoutX="22.0" layoutY="62.0" prefHeight="55.0" prefWidth="232.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <HBox fx:id="menuNewTable" prefHeight="30.0" prefWidth="214.0" spacing="10.0" styleClass="menu" VBox.vgrow="NEVER">
+                                       <children>
+                                          <FontAwesomeIcon glyphName="TABLE" />
+                                          <Label styleClass="name" text="naivana Tobala" HBox.hgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Kiran" size="25.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox fx:id="menuTableGroup" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="214.0" spacing="10.0" styleClass="menu">
+                                       <children>
+                                          <FontAwesomeIcon glyphName="TABLE" />
+                                          <Label styleClass="name" text="naivana Tobala ga`upa" HBox.hgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Kiran" size="25.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                     <font>
+                        <Font name="Kiran" size="20.0" />
+                     </font>
+                  </TitledPane>
               </panes>
                <VBox.margin>
                   <Insets top="20.0" />

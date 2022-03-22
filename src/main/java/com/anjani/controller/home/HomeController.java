@@ -1,18 +1,22 @@
 package com.anjani.controller.home;
-
 import com.anjani.config.SpringFXMLLoader;
+import com.anjani.controller.create.CreateTableController;
+import com.anjani.controller.create.CreateTableGroupController;
 import com.anjani.view.FxmlView;
 import com.anjani.view.StageManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 @Component
@@ -21,10 +25,14 @@ public class HomeController implements Initializable {
     @Lazy
     private StageManager stageManager;
     @Autowired
+    private SpringFXMLLoader fxmlLoader;
+    @Autowired
     private SpringFXMLLoader loader;
     @FXML private BorderPane mainPane;
     @FXML private HBox menuBilling;
     @FXML private HBox menuKirana;
+    @FXML private HBox menuNewTable;
+    @FXML private HBox menuTableGroup;
 
     private Pane center;
     @Override
@@ -37,6 +45,42 @@ public class HomeController implements Initializable {
             stageManager.switchScene(FxmlView.KIRANA);
           //  center = stageManager.getFxmlLoader().getPage("/fxml/transaction/Kirana.fxml");
             //mainPane.setCenter(center);
+        });
+        menuTableGroup.setOnMouseClicked(e->{
+            DialogPane pane =   fxmlLoader.getDialogPage("/fxml/create/CreateTableGroup.fxml");
+            CreateTableGroupController dialog = fxmlLoader.getLoader().getController();
+            Dialog<ButtonType> di = new Dialog<>();
+            di.setDialogPane(pane);
+            di.setTitle("Add New Table Group");
+            di.setOnCloseRequest(e1->{
+                System.out.println("closing");
+                e1.consume();
+            });
+            Optional<ButtonType> clickedButton = di.showAndWait();
+            if(clickedButton.isEmpty()){
+                return;
+            }
+            if(clickedButton.get()==ButtonType.FINISH){
+                System.out.println("Finished");
+            }
+        });
+        menuNewTable.setOnMouseClicked(e->{
+            DialogPane pane =   fxmlLoader.getDialogPage("/fxml/create/CreateTable.fxml");
+            CreateTableController dialog = fxmlLoader.getLoader().getController();
+            Dialog<ButtonType> di = new Dialog<>();
+            di.setDialogPane(pane);
+            di.setTitle("Add New Table Group");
+            di.setOnCloseRequest(e1->{
+                System.out.println("closing");
+                e1.consume();
+            });
+            Optional<ButtonType> clickedButton = di.showAndWait();
+            if(clickedButton.isEmpty()){
+                return;
+            }
+            if(clickedButton.get()==ButtonType.FINISH){
+                System.out.println("Finished");
+            }
         });
     }
 }

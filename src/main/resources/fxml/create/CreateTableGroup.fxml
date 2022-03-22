@@ -16,10 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<DialogPane fx:id="dialog" prefHeight="430.0"
-            prefWidth="491.0" xmlns="http://javafx.com/javafx/17"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.anjani.controller.create.CreateTableGroupController">
+<DialogPane fx:id="dialog" prefHeight="430.0" prefWidth="491.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.create.CreateTableGroupController">
    <header>
       <StackPane style="-fx-background-color: #0275d8;">
          <children>

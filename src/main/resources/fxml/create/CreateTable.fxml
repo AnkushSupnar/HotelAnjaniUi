@@ -16,11 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<DialogPane fx:id="dialog" contentText="Create Table"
-            headerText="Add New Table" prefHeight="618.0"
-            prefWidth="500.0" xmlns="http://javafx.com/javafx/17"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.anjani.controller.create.CreateTableController">
+<DialogPane fx:id="dialog" contentText="Create Table" headerText="Add New Table" prefHeight="618.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.create.CreateTableController">
    <content>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="605.0" prefWidth="50.0">
          <children>
@@ -117,7 +113,7 @@
                         <Insets top="10.0" />
                      </padding>
                   </HBox>
-                  <TableView prefHeight="433.0" prefWidth="560.0">
+                  <TableView fx:id="table" prefHeight="433.0" prefWidth="560.0">
                     <columns>
                       <TableColumn fx:id="colId" prefWidth="75.0" text="ID" />
                       <TableColumn fx:id="colGroup" prefWidth="155.19995880126953" text="Table Group" />
