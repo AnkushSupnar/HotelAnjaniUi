@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<SplitPane fx:id="mainPane" dividerPositions="0.3196704842274462, 0.9184247538677918" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="997.0" stylesheets="@../css/tablebutton.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.transaction.BillingController">
+<SplitPane fx:id="mainPane" dividerPositions="0.37601679349252165, 0.8050380477564943" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="781.0" prefWidth="1526.0" stylesheets="@../css/tablebutton.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.transaction.BillingController">
   <items>
     <AnchorPane fx:id="paneTable" minHeight="0.0" minWidth="0.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
          <children>
@@ -18,19 +29,198 @@
       </AnchorPane>
     <AnchorPane fx:id="paneBilling" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
-            <TilePane layoutX="52.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: grey;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Pane layoutX="106.0" layoutY="56.0" prefHeight="97.0" prefWidth="645.0" styleClass="box" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <HBox prefHeight="26.0" prefWidth="586.0">
+                  <Label layoutX="14.0" layoutY="14.0" styleClass="label-marathi" text="vaoTrcao naava" />
+                  <TextField layoutX="87.0" layoutY="6.0" prefHeight="39.0" prefWidth="198.0" styleClass="text-field-marathi" />
+                  <Label layoutX="287.0" layoutY="14.0" styleClass="label-marathi" text="idnaaMk" />
+                  <DatePicker layoutX="331.0" layoutY="13.0" prefHeight="30.0" prefWidth="138.0" promptText="Select Date" />
+                  <HBox layoutX="5.0" layoutY="50.0" spacing="10.0">
                      <children>
-                        <Label text="BillNo" />
-                        <TextField editable="false" promptText="BillNo" />
-                        <Label text="Date" />
-                        <DatePicker />
+                        <Label styleClass="label-marathi" text="ga`ahkacao naava">
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField prefHeight="39.0" prefWidth="333.0" styleClass="text-field-marathi" />
+                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="SaaoQaa">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="SEARCH" />
+                           </graphic>
+                        </Button>
+                        <Button layoutX="451.0" layoutY="10.0" mnemonicParsing="false" stylesheets="@../css/button.css" text="naivana">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="PLUS" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Button layoutX="496.0" layoutY="7.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="138.0" text="Running Table" />
+               </children>
+               <stylesheets>
+                  <URL value="@../css/box.css" />
+                  <URL value="@../css/textbox.css" />
+               </stylesheets>
+            </Pane>
+            <Pane layoutX="8.0" layoutY="95.0" prefHeight="92.0" prefWidth="645.0" styleClass="box" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <Label layoutX="7.0" layoutY="1.0" styleClass="label-marathi" text="k^ToigarI" />
+                  <HBox layoutX="5.0" layoutY="15.0">
+                     <children>
+                        <TextField prefHeight="39.0" prefWidth="179.0" styleClass="text-field-marathi" />
+                        <TextField prefHeight="39.0" prefWidth="187.0" styleClass="text-field-marathi" />
+                        <TextField prefHeight="39.0" prefWidth="90.0" styleClass="text-field-marathi" />
+                        <TextField prefWidth="90.0" styleClass="text-field-marathi" />
+                        <TextField prefWidth="90.0" styleClass="text-field-marathi" />
+                     </children>
+                  </HBox>
+                  <Label layoutX="185.0" layoutY="1.0" styleClass="label-marathi" text="maalaacao naava" />
+                  <Label layoutX="372.0" layoutY="1.0" styleClass="label-marathi" text="naga" />
+                  <Label layoutX="460.0" layoutY="1.0" styleClass="label-marathi" text="Baava" />
+                  <Label layoutX="551.0" layoutY="1.0" styleClass="label-marathi" text="ikMmata" />
+                  <HBox layoutX="6.0" layoutY="59.0" spacing="10.0">
+                     <children>
+                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="A^D">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="PLUS" />
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="ApaDoT">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="EDIT" />
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="rImauvh">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="CLOSE" />
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="\@laIAr">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="CLOSE" />
+                           </graphic>
+                        </Button>
                      </children>
                   </HBox>
                </children>
-            </TilePane>
+               <stylesheets>
+                  <URL value="@../css/box.css" />
+                  <URL value="@../css/textbox.css" />
+               </stylesheets>
+            </Pane>
+            <TableView layoutY="194.0" prefHeight="275.0" prefWidth="645.0" stylesheets="@../css/table.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+              <columns>
+                <TableColumn prefWidth="56.000059485435486" text="Sr.No" />
+                <TableColumn prefWidth="280.7999954223633" text="Item Name" />
+                  <TableColumn prefWidth="96.0" text="Quantity" />
+                  <TableColumn prefWidth="99.19998168945312" text="Rate" />
+                  <TableColumn prefWidth="110.40008544921875" text="Amount" />
+              </columns>
+            </TableView>
+            <Pane layoutY="469.0" prefHeight="154.0" prefWidth="645.0" styleClass="box" stylesheets="@../css/box.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <HBox>
+                     <children>
+                        <MFXTextField allowEdit="false" floatMode="BORDER" floatingText="Net Total" prefHeight="40.0" prefWidth="160.0">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </MFXTextField>
+                        <MFXTextField floatMode="BORDER" floatingText="Other Charges" prefHeight="40.0" prefWidth="160.0">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </MFXTextField>
+                        <MFXTextField floatMode="BORDER" floatingText="Discount" prefHeight="33.0" prefWidth="160.0">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </MFXTextField>
+                        <MFXTextField allowEdit="false" floatMode="BORDER" floatingText="Grand Total" prefHeight="29.0" prefWidth="160.0">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </MFXTextField>
+                     </children>
+                  </HBox>
+                  <HBox layoutX="5.0" layoutY="54.0">
+                     <children>
+                        <ComboBox prefHeight="30.0" prefWidth="160.0" promptText="Select Bank Name" />
+                        <MFXTextField floatMode="BORDER" floatingText="Recieved Amount" prefHeight="50.0" prefWidth="160.0">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </MFXTextField>
+                        <MFXTextField floatMode="BORDER" floatingText="Remaining Amount" prefHeight="50.0" prefWidth="160.0">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </MFXTextField>
+                     </children>
+                  </HBox>
+                  <HBox layoutX="14.0" layoutY="115.0" spacing="10.0">
+                     <children>
+                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="saovh">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="SAVE" />
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="ApaDoT">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="EDIT" />
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="i@laAr">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="RECYCLE" />
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="ipa`MT">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="PRINT" />
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="jaunao ibala">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="PRINT" />
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="SaIFT">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="SEARCH" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
+            <TableView layoutX="37.0" layoutY="625.0" prefHeight="154.0" prefWidth="200.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="625.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="BillNo" />
+                <TableColumn prefWidth="75.0" text="Bill Amount" />
+                  <TableColumn prefWidth="97.59991455078125" text="Discount" />
+                  <TableColumn prefWidth="93.60003662109375" text="Grand Total" />
+                  <TableColumn prefWidth="217.60000610351562" text="Customer Name" />
+                  <TableColumn prefWidth="86.40008544921875" text="Cash/Credit" />
+              </columns>
+            </TableView>
          </children></AnchorPane>
-      <AnchorPane fx:id="paneItem" layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+      <AnchorPane fx:id="paneItem" layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <TabPane layoutX="30.0" layoutY="108.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <tabs>
+                <Tab text="Untitled Tab 1">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+                <Tab text="Untitled Tab 2">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+         </children></AnchorPane>
   </items>
 </SplitPane>

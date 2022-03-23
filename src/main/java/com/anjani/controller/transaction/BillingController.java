@@ -47,7 +47,6 @@ public class BillingController implements Initializable {
     FadeTransition ft;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         addTableGroup();
         for(Button button:tableButtonList){
             if(button.getText().equalsIgnoreCase("A1"))
