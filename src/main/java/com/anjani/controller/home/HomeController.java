@@ -39,7 +39,7 @@ public class HomeController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         menuBilling.setOnMouseClicked(e->{
-            System.out.println("clicked");
+            stageManager.switchScene(FxmlView.BILLING);
         });
         menuKirana.setOnMouseClicked(e->{
             stageManager.switchScene(FxmlView.KIRANA);
@@ -82,5 +82,6 @@ public class HomeController implements Initializable {
                 System.out.println("Finished");
             }
         });
+
     }
 }

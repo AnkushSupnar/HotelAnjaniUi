@@ -40,7 +40,7 @@ public class Main extends Application {
         springContext.close();
     }
     protected void displayInitialScene() {
-        stageManager.switchScene(FxmlView.HOME);
+        stageManager.switchScene(FxmlView.BILLING);
         //stageManager.switchScene(FxmlView.);
         //stageManager.switchScene(FxmlView.HOME);
     }
@@ -50,5 +50,6 @@ public class Main extends Application {
         builder.headless(false); //needed for TestFX integration testing or eles will get a java.awt.HeadlessException during tests
         return builder.run(args);
     }
+
 
 }

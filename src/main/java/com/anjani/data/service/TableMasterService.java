@@ -47,6 +47,10 @@ public class TableMasterService {
         }
 
     }
+    public List<TableMaster>getByTableGroup(String group){
+        return Arrays.asList(template.getForObject(CommonData.url+"/tablemaster/bygroup/{group}",TableMaster[].class,group));
+    }
+
     public TableMaster save(TableMaster tableMaster){
         return template.postForObject(CommonData.url+"/tablemaster/save",tableMaster,TableMaster.class);
     }

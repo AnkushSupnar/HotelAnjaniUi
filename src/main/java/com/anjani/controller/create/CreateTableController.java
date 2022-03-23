@@ -109,6 +109,7 @@ public class CreateTableController implements Initializable {
             {
                 alert.showError("Table Name Already Exist in This Group");
                 txtTableName.requestFocus();
+
                 return false;
             }
         }
