@@ -3,6 +3,9 @@
     -fx-font-family: 'kiran';
     -fx-text-fill: #ffffff;
     -fx-background-color:#6200ee;
+     -fx-border-radius:10px;
+     -fx-background-radius:10px;
+     -fx-border-color:#6200ee;
   }
   .button .glyph-icon{
       -fx-fill:#ffffff;

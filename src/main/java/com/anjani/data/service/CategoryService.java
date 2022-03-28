@@ -5,11 +5,8 @@ import com.anjani.data.common.RestTemplateResponseErrorHandler;
 import com.anjani.data.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,8 +14,6 @@ import java.util.List;
 public class CategoryService {
     private RestTemplate template;
     private String url =null;
-
-
     @Autowired
     public CategoryService(RestTemplateBuilder restTemplateBuilder) {
         this.template = restTemplateBuilder
@@ -40,6 +35,4 @@ public class CategoryService {
     public Category getById(Long id){
         return template.getForObject(CommonData.url+"/category/byid/{id}",Category.class,id);
     }
-
-
 }

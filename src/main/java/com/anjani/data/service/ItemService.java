@@ -42,5 +42,8 @@ public class ItemService {
         return Arrays.asList(
                 template.getForObject(CommonData.url+"/item/bycategoryname/{name}",String[].class,catname));
     }
+    public Item getItemByCode(Integer code){
+        return template.getForObject(CommonData.url+"/bycode/{code}",Item.class,code);
+    }
 
 }

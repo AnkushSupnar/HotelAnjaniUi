@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane fx:id="mainPane" dividerPositions="0.37601679349252165, 0.8050380477564943" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="781.0" prefWidth="1526.0" stylesheets="@../css/tablebutton.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.transaction.BillingController">
+<SplitPane fx:id="mainPane" dividerPositions="0.3064812385200735, 0.816845972185778" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="781.0" prefWidth="1526.0" stylesheets="@../css/tablebutton.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.transaction.BillingController">
   <items>
     <AnchorPane fx:id="paneTable" minHeight="0.0" minWidth="0.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
          <children>
@@ -31,161 +31,167 @@
          <children>
             <Pane layoutX="106.0" layoutY="56.0" prefHeight="97.0" prefWidth="645.0" styleClass="box" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Label layoutX="14.0" layoutY="14.0" styleClass="label-marathi" text="vaoTrcao naava" />
-                  <TextField layoutX="87.0" layoutY="6.0" prefHeight="39.0" prefWidth="198.0" styleClass="text-field-marathi" />
+                  <Label layoutX="2.0" layoutY="14.0" styleClass="label-marathi" text="vaoTrcao naava" />
+                  <TextField fx:id="txtWaitor" layoutX="75.0" layoutY="6.0" prefHeight="39.0" prefWidth="198.0" styleClass="text-field-marathi" />
                   <Label layoutX="287.0" layoutY="14.0" styleClass="label-marathi" text="idnaaMk" />
-                  <DatePicker layoutX="331.0" layoutY="13.0" prefHeight="30.0" prefWidth="138.0" promptText="Select Date" />
-                  <HBox layoutX="5.0" layoutY="50.0" spacing="10.0">
+                  <DatePicker fx:id="date" layoutX="331.0" layoutY="13.0" prefHeight="30.0" prefWidth="138.0" promptText="Select Date" />
+                  <HBox layoutX="5.0" layoutY="50.0" spacing="1.0">
                      <children>
                         <Label styleClass="label-marathi" text="ga`ahkacao naava">
                            <HBox.margin>
                               <Insets top="5.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField prefHeight="39.0" prefWidth="333.0" styleClass="text-field-marathi" />
-                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="SaaoQaa">
+                        <TextField fx:id="txtCustomer" prefHeight="39.0" prefWidth="270.0" styleClass="text-field-marathi" />
+                        <TextField fx:id="txtPhone" layoutX="89.0" layoutY="10.0" prefHeight="39.0" prefWidth="130.0" promptText="1234567890" styleClass="text-field-marathi" />
+                        <Button fx:id="btnSearchCustomer" mnemonicParsing="false" stylesheets="@../css/button.css" text="SaaoQaa">
                            <graphic>
                               <FontAwesomeIcon glyphName="SEARCH" />
                            </graphic>
                         </Button>
-                        <Button layoutX="451.0" layoutY="10.0" mnemonicParsing="false" stylesheets="@../css/button.css" text="naivana">
+                        <Button fx:id="btnAddCustomer" layoutX="451.0" layoutY="10.0" mnemonicParsing="false" stylesheets="@../css/button.css" text="naivana">
                            <graphic>
                               <FontAwesomeIcon glyphName="PLUS" />
                            </graphic>
                         </Button>
                      </children>
                   </HBox>
-                  <Button layoutX="496.0" layoutY="7.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="138.0" text="Running Table" />
+                  <Button fx:id="btnRunningTable" layoutX="648.0" layoutY="3.0" mnemonicParsing="false" prefHeight="82.0" prefWidth="119.0" style="-fx-background-color: white; -fx-border-color: #1ee418; -fx-border-width: 5px; -fx-border-radius: 10px;" stylesheets="@../css/tablebutton.css" text="Table" textFill="#1ee418">
+                     <font>
+                        <Font name="System Bold Italic" size="25.0" />
+                     </font></Button>
                </children>
                <stylesheets>
                   <URL value="@../css/box.css" />
                   <URL value="@../css/textbox.css" />
                </stylesheets>
             </Pane>
-            <Pane layoutX="8.0" layoutY="95.0" prefHeight="92.0" prefWidth="645.0" styleClass="box" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <Pane layoutY="90.0" prefHeight="105.0" prefWidth="754.0" styleClass="box" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
                   <Label layoutX="7.0" layoutY="1.0" styleClass="label-marathi" text="k^ToigarI" />
-                  <HBox layoutX="5.0" layoutY="15.0">
+                  <HBox layoutX="5.0" layoutY="20.0">
                      <children>
-                        <TextField prefHeight="39.0" prefWidth="179.0" styleClass="text-field-marathi" />
-                        <TextField prefHeight="39.0" prefWidth="187.0" styleClass="text-field-marathi" />
-                        <TextField prefHeight="39.0" prefWidth="90.0" styleClass="text-field-marathi" />
-                        <TextField prefWidth="90.0" styleClass="text-field-marathi" />
-                        <TextField prefWidth="90.0" styleClass="text-field-marathi" />
+                        <TextField fx:id="txtCategory" layoutX="10.0" layoutY="10.0" prefHeight="39.0" prefWidth="200.0" promptText="k^ToigarI" styleClass="text-field-marathi" />
+                        <TextField fx:id="txtCode" prefHeight="39.0" prefWidth="80.0" promptText="kaoD" styleClass="text-field-marathi" />
+                        <TextField fx:id="txtItem" prefHeight="39.0" prefWidth="210.0" promptText="maalaacao naava" styleClass="text-field-marathi" />
+                        <TextField fx:id="txtQuantity" prefWidth="90.0" promptText="naga" styleClass="text-field-marathi" />
+                        <TextField fx:id="txtRate" prefWidth="90.0" promptText="Baava" styleClass="text-field-marathi" />
+                        <TextField fx:id="txtAmount" prefWidth="90.0" promptText="ikMmata" styleClass="text-field-marathi" />
                      </children>
                   </HBox>
-                  <Label layoutX="185.0" layoutY="1.0" styleClass="label-marathi" text="maalaacao naava" />
-                  <Label layoutX="372.0" layoutY="1.0" styleClass="label-marathi" text="naga" />
-                  <Label layoutX="460.0" layoutY="1.0" styleClass="label-marathi" text="Baava" />
-                  <Label layoutX="551.0" layoutY="1.0" styleClass="label-marathi" text="ikMmata" />
-                  <HBox layoutX="6.0" layoutY="59.0" spacing="10.0">
+                  <Label layoutX="301.0" layoutY="1.0" styleClass="label-marathi" text="maalaacao naava" />
+                  <Label layoutX="500.0" layoutY="1.0" styleClass="label-marathi" text="naga" />
+                  <Label layoutX="588.0" layoutY="1.0" styleClass="label-marathi" text="Baava" />
+                  <Label layoutX="679.0" layoutY="1.0" styleClass="label-marathi" text="ikMmata" />
+                  <HBox layoutX="6.0" layoutY="64.0" spacing="10.0">
                      <children>
-                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="A^D">
+                        <Button fx:id="btnAdd" mnemonicParsing="false" stylesheets="@../css/button.css" text="A^D">
                            <graphic>
                               <FontAwesomeIcon glyphName="PLUS" />
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="ApaDoT">
+                        <Button fx:id="btnUpdate" mnemonicParsing="false" stylesheets="@../css/button.css" text="ApaDoT">
                            <graphic>
                               <FontAwesomeIcon glyphName="EDIT" />
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="rImauvh">
+                        <Button fx:id="btnRemove" mnemonicParsing="false" stylesheets="@../css/button.css" text="rImauvh">
                            <graphic>
                               <FontAwesomeIcon glyphName="CLOSE" />
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="\@laIAr">
+                        <Button fx:id="btnClear" mnemonicParsing="false" stylesheets="@../css/button.css" text="\@laIAr">
                            <graphic>
                               <FontAwesomeIcon glyphName="CLOSE" />
                            </graphic>
                         </Button>
                      </children>
                   </HBox>
+                  <Label layoutX="216.0" layoutY="1.0" styleClass="label-marathi" text="kaoD" />
                </children>
                <stylesheets>
                   <URL value="@../css/box.css" />
                   <URL value="@../css/textbox.css" />
                </stylesheets>
             </Pane>
-            <TableView layoutY="194.0" prefHeight="275.0" prefWidth="645.0" stylesheets="@../css/table.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <TableView fx:id="tableTransaction" layoutY="197.0" prefHeight="275.0" prefWidth="645.0" stylesheets="@../css/table.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
               <columns>
-                <TableColumn prefWidth="56.000059485435486" text="Sr.No" />
-                <TableColumn prefWidth="280.7999954223633" text="Item Name" />
-                  <TableColumn prefWidth="96.0" text="Quantity" />
-                  <TableColumn prefWidth="99.19998168945312" text="Rate" />
-                  <TableColumn prefWidth="110.40008544921875" text="Amount" />
+                <TableColumn fx:id="colSrNo" prefWidth="56.000059485435486" text="Sr.No" />
+                <TableColumn fx:id="colItemName" prefWidth="280.7999954223633" text="Item Name" />
+                  <TableColumn fx:id="colQuantity" prefWidth="96.0" text="Quantity" />
+                  <TableColumn fx:id="colRate" prefWidth="99.19998168945312" text="Rate" />
+                  <TableColumn fx:id="colAmount" prefWidth="110.40008544921875" text="Amount" />
               </columns>
             </TableView>
-            <Pane layoutY="469.0" prefHeight="154.0" prefWidth="645.0" styleClass="box" stylesheets="@../css/box.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <Pane layoutY="474.0" prefHeight="150.0" prefWidth="772.0" styleClass="box" stylesheets="@../css/box.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
-                  <HBox>
+                  <HBox layoutY="2.0">
                      <children>
-                        <MFXTextField allowEdit="false" floatMode="BORDER" floatingText="Net Total" prefHeight="40.0" prefWidth="160.0">
+                        <MFXTextField fx:id="txtNetTotal" allowEdit="false" floatMode="BORDER" floatingText="Net Total" prefHeight="40.0" prefWidth="160.0">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </MFXTextField>
-                        <MFXTextField floatMode="BORDER" floatingText="Other Charges" prefHeight="40.0" prefWidth="160.0">
+                        <MFXTextField fx:id="txtOther" floatMode="BORDER" floatingText="Other Charges" prefHeight="40.0" prefWidth="160.0">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </MFXTextField>
-                        <MFXTextField floatMode="BORDER" floatingText="Discount" prefHeight="33.0" prefWidth="160.0">
+                        <MFXTextField fx:id="txtDiscount" floatMode="BORDER" floatingText="Discount" prefHeight="33.0" prefWidth="160.0">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </MFXTextField>
-                        <MFXTextField allowEdit="false" floatMode="BORDER" floatingText="Grand Total" prefHeight="29.0" prefWidth="160.0">
+                        <MFXTextField fx:id="txtGrand" allowEdit="false" floatMode="BORDER" floatingText="Grand Total" prefHeight="29.0" prefWidth="160.0">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </MFXTextField>
                      </children>
                   </HBox>
-                  <HBox layoutX="5.0" layoutY="54.0">
+                  <HBox layoutX="5.0" layoutY="55.0">
                      <children>
-                        <ComboBox prefHeight="30.0" prefWidth="160.0" promptText="Select Bank Name" />
-                        <MFXTextField floatMode="BORDER" floatingText="Recieved Amount" prefHeight="50.0" prefWidth="160.0">
+                        <ComboBox fx:id="cmbBankName" prefHeight="30.0" prefWidth="160.0" promptText="Select Bank Name" />
+                        <MFXTextField fx:id="txtRecieved" floatMode="BORDER" floatingText="Recieved Amount" prefHeight="50.0" prefWidth="160.0">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </MFXTextField>
-                        <MFXTextField floatMode="BORDER" floatingText="Remaining Amount" prefHeight="50.0" prefWidth="160.0">
+                        <MFXTextField fx:id="txtRemaining" floatMode="BORDER" floatingText="Remaining Amount" prefHeight="50.0" prefWidth="160.0">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </MFXTextField>
                      </children>
                   </HBox>
-                  <HBox layoutX="14.0" layoutY="115.0" spacing="10.0">
+                  <HBox layoutX="14.0" layoutY="110.0" spacing="10.0">
                      <children>
-                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="saovh">
+                        <Button fx:id="btnSave" mnemonicParsing="false" stylesheets="@../css/button.css" text="saovh">
                            <graphic>
                               <FontAwesomeIcon glyphName="SAVE" />
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="ApaDoT">
+                        <Button fx:id="btnUpdateBill" mnemonicParsing="false" stylesheets="@../css/button.css" text="ApaDoT">
                            <graphic>
                               <FontAwesomeIcon glyphName="EDIT" />
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="i@laAr">
+                        <Button fx:id="btnClearBill" mnemonicParsing="false" stylesheets="@../css/button.css" text="i@laAr">
                            <graphic>
                               <FontAwesomeIcon glyphName="RECYCLE" />
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="ipa`MT">
+                        <Button fx:id="btnPrint" mnemonicParsing="false" stylesheets="@../css/button.css" text="ipa`MT">
                            <graphic>
                               <FontAwesomeIcon glyphName="PRINT" />
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="jaunao ibala">
+                        <Button fx:id="btnOldBillPrint" mnemonicParsing="false" stylesheets="@../css/button.css" text="jaunao ibala">
                            <graphic>
                               <FontAwesomeIcon glyphName="PRINT" />
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" stylesheets="@../css/button.css" text="SaIFT">
+                        <Button fx:id="btnShift" mnemonicParsing="false" stylesheets="@../css/button.css" text="SaIFT">
                            <graphic>
                               <FontAwesomeIcon glyphName="SEARCH" />
                            </graphic>
@@ -194,14 +200,15 @@
                   </HBox>
                </children>
             </Pane>
-            <TableView layoutX="37.0" layoutY="625.0" prefHeight="154.0" prefWidth="200.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="625.0">
+            <TableView fx:id="tableOldBill" layoutX="37.0" layoutY="625.0" prefHeight="154.0" prefWidth="200.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="625.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="BillNo" />
-                <TableColumn prefWidth="75.0" text="Bill Amount" />
-                  <TableColumn prefWidth="97.59991455078125" text="Discount" />
-                  <TableColumn prefWidth="93.60003662109375" text="Grand Total" />
-                  <TableColumn prefWidth="217.60000610351562" text="Customer Name" />
-                  <TableColumn prefWidth="86.40008544921875" text="Cash/Credit" />
+                <TableColumn fx:id="colBillNo" prefWidth="75.0" text="BillNo" />
+                <TableColumn fx:id="colBillAmount" prefWidth="75.0" text="Bill Amount" />
+                  <TableColumn fx:id="colDiscount" prefWidth="70.39996337890625" text="Discount" />
+                  <TableColumn fx:id="colGrandTotal" prefWidth="79.19996643066406" text="Grand Total" />
+                  <TableColumn fx:id="colGrandTotal1" prefWidth="75.2000732421875" text="Recieved" />
+                  <TableColumn fx:id="colCustomerName" prefWidth="194.39990234375" text="Customer Name" />
+                  <TableColumn fx:id="colCash" prefWidth="72.800048828125" text="Cash/Credit" />
               </columns>
             </TableView>
          </children></AnchorPane>
