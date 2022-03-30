@@ -32,7 +32,6 @@
             <Pane layoutX="106.0" layoutY="56.0" prefHeight="97.0" prefWidth="645.0" styleClass="box" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label layoutX="2.0" layoutY="14.0" styleClass="label-marathi" text="vaoTrcao naava" />
-                  <TextField fx:id="txtWaitor" layoutX="75.0" layoutY="6.0" prefHeight="39.0" prefWidth="198.0" styleClass="text-field-marathi" />
                   <Label layoutX="287.0" layoutY="14.0" styleClass="label-marathi" text="idnaaMk" />
                   <DatePicker fx:id="date" layoutX="331.0" layoutY="13.0" prefHeight="30.0" prefWidth="138.0" promptText="Select Date" />
                   <HBox layoutX="5.0" layoutY="50.0" spacing="1.0">
@@ -60,6 +59,7 @@
                      <font>
                         <Font name="System Bold Italic" size="25.0" />
                      </font></Button>
+                  <ComboBox fx:id="cmbWaitor" layoutX="78.0" layoutY="11.0" prefHeight="32.0" prefWidth="200.0" promptText="vaoTrcao naava" stylesheets="@../css/combobox.css" />
                </children>
                <stylesheets>
                   <URL value="@../css/box.css" />
@@ -149,9 +149,9 @@
                         </MFXTextField>
                      </children>
                   </HBox>
-                  <HBox layoutX="5.0" layoutY="55.0">
+                  <HBox alignment="CENTER" layoutX="5.0" layoutY="55.0">
                      <children>
-                        <ComboBox fx:id="cmbBankName" prefHeight="30.0" prefWidth="160.0" promptText="Select Bank Name" />
+                        <ComboBox fx:id="cmbBankName" prefHeight="30.0" prefWidth="160.0" promptText="ba^Mkocao naava" stylesheets="@../css/combobox.css" HBox.hgrow="ALWAYS" />
                         <MFXTextField fx:id="txtRecieved" floatMode="BORDER" floatingText="Recieved Amount" prefHeight="50.0" prefWidth="160.0">
                            <font>
                               <Font name="System Bold" size="16.0" />

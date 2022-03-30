@@ -5,7 +5,11 @@ import com.anjani.data.common.RestTemplateResponseErrorHandler;
 import com.anjani.data.entity.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
@@ -43,7 +47,19 @@ public class ItemService {
                 template.getForObject(CommonData.url+"/item/bycategoryname/{name}",String[].class,catname));
     }
     public Item getItemByCode(Integer code){
-        return template.getForObject(CommonData.url+"/bycode/{code}",Item.class,code);
+        Item item=null;
+        try {
+             item =  template.getForObject(CommonData.url + "/bycode/{code}",Item.class, code);
+             if(item.getId()==null){
+                 item=null;
+             }
+        }catch(HttpClientErrorException | HttpServerErrorException e){
+            if(HttpStatus.NOT_FOUND.equals(e.getStatusCode())){
+                return null;
+            }
+
+        }
+        return item;
     }
 
 }

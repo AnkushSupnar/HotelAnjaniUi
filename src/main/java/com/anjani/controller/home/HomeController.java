@@ -1,5 +1,6 @@
 package com.anjani.controller.home;
 import com.anjani.config.SpringFXMLLoader;
+import com.anjani.controller.create.AddCustomerController;
 import com.anjani.controller.create.AddEmployeeController;
 import com.anjani.controller.create.CreateTableController;
 import com.anjani.controller.create.CreateTableGroupController;
@@ -35,6 +36,7 @@ public class HomeController implements Initializable {
     @FXML private HBox menuNewTable;
     @FXML private HBox menuTableGroup;
     @FXML private HBox menuEmployee;
+    @FXML private HBox menuAddCustomer;
 
 
     private Pane center;
@@ -103,6 +105,23 @@ public class HomeController implements Initializable {
                 System.out.println("Finished");
             }
         });
-
+        menuAddCustomer.setOnMouseClicked(e->{
+            DialogPane pane =   fxmlLoader.getDialogPage("/fxml/create/AddCustomer.fxml");
+            AddCustomerController dialog = fxmlLoader.getLoader().getController();
+            Dialog<ButtonType> di = new Dialog<>();
+            di.setDialogPane(pane);
+            di.setTitle("Add New Customer");
+            di.setOnCloseRequest(e1->{
+                System.out.println("closing");
+                e1.consume();
+            });
+            Optional<ButtonType> clickedButton = di.showAndWait();
+            if(clickedButton.isEmpty()){
+                return;
+            }
+            if(clickedButton.get()==ButtonType.FINISH){
+                System.out.println("Finished");
+            }
+        });
     }
 }

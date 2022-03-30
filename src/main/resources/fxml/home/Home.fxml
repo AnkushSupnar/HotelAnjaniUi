@@ -104,6 +104,16 @@
                                           </Label>
                                        </children>
                                     </HBox>
+                                    <HBox fx:id="menuAddCustomer" layoutX="10.0" layoutY="92.0" prefHeight="30.0" prefWidth="214.0" spacing="10.0" styleClass="menu">
+                                       <children>
+                                          <FontAwesomeIcon glyphName="TABLE" />
+                                          <Label styleClass="name" text="naivana ga`ahk" HBox.hgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Kiran" size="25.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
                                  </children>
                               </VBox>
                            </children>
