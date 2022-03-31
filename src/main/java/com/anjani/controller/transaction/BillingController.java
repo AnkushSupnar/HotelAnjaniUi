@@ -2,21 +2,15 @@ package com.anjani.controller.transaction;
 
 import com.anjani.config.SpringFXMLLoader;
 import com.anjani.controller.create.AddCustomerController;
-import com.anjani.data.common.NotFoundException;
-import com.anjani.data.entity.Customer;
-import com.anjani.data.entity.Item;
-import com.anjani.data.entity.TableMaster;
-import com.anjani.data.entity.TempTransaction;
+import com.anjani.data.entity.*;
 import com.anjani.data.service.*;
 import com.anjani.view.AlertNotification;
-import com.anjani.view.AutoCompleteTextField;
 import com.anjani.view.StageManager;
 import impl.org.controlsfx.autocompletion.SuggestionProvider;
 import impl.org.controlsfx.skin.AutoCompletePopup;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
-import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -38,7 +32,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -55,7 +48,7 @@ public class BillingController implements Initializable {
     @FXML private VBox tableGroupBox;
     @FXML private Button btnRunningTable,btnRemove,btnSave,btnSearchCustomer,btnShift,btnUpdate,btnUpdateBill;
 
-    @FXML private Button btnAdd,btnAddCustomer,btnClear,btnClearBill,btnOldBillPrint,btnPrint;
+    @FXML private Button btnAdd,btnOrder,btnAddCustomer,btnClear,btnClearBill,btnOldBillPrint,btnPrint;
     @FXML private ComboBox<String> cmbBankName;
     @FXML private TableView<TempTransaction> tableTransaction;
     @FXML private TableColumn<TempTransaction,String> colItemName;
@@ -90,6 +83,7 @@ public class BillingController implements Initializable {
     @Autowired private EmployeeService employeeService;
     @Autowired private CustomerService customerService;
     @Autowired private TempTransactionService tempTransactionService;
+
     @Autowired private AlertNotification alert;
     private TableMaster table;
     private ObservableList<Button>tableButtonList = FXCollections.observableArrayList();
@@ -99,6 +93,7 @@ public class BillingController implements Initializable {
     private SuggestionProvider<String>customerNames;
     private Item item;
     private Customer customer;
+    private Employee waitor;
     FadeTransition ft;
     private ObservableList<TempTransaction>trList = FXCollections.observableArrayList();
     @Override
@@ -139,16 +134,21 @@ public class BillingController implements Initializable {
             System.out.println("Finished");
         }
     }
-
     private void setProperties() {
 
         colItemName.setCellValueFactory(cellData->new SimpleStringProperty(cellData.getValue().getItem().getItemname()));
         colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        colRate.setCellValueFactory(cellData->new SimpleFloatProperty(cellData.getValue().getItem().getRate()));
+        colRate.setCellValueFactory(new PropertyValueFactory<>("rate"));
         colSrNo.setCellValueFactory(new PropertyValueFactory<>("id"));
         colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         tableTransaction.setItems(trList);
 
+        cmbWaitor.setOnAction(e->{
+            if(cmbWaitor.getValue()!=null){
+                waitor = employeeService.getByNickname(cmbWaitor.getValue());
+                System.out.println(waitor);
+            }
+        });
         btnSearchCustomer.setOnAction(e->searchCustomer());
         btnAddCustomer.setOnAction(e->showAddCustomer());
         txtCode.textProperty().addListener(new ChangeListener<String>() {
@@ -234,21 +234,86 @@ public class BillingController implements Initializable {
         });
         txtAmount.setOnAction(e->add());
         btnAdd.setOnAction(e->add());
-    }
+        btnClear.setOnAction(e->clear());
 
+    }
+    private void clear() {
+         item = null;
+         setItem(null);
+    }
     private void add() {
         if(!validate()) return;
+       // item.setRate(Float.parseFloat(txtRate.getText()));
         TempTransaction tr = TempTransaction.builder()
                 .amount(Float.parseFloat(txtAmount.getText()))
                 .item(item)
+                .rate(Float.parseFloat(txtRate.getText()))
                 .printqty(Float.parseFloat(txtQuantity.getText()))
                 .quantity(Float.parseFloat(txtQuantity.getText()))
+                .tableMaster(table)
                 .build();
-        System.out.println(tr);
+       // System.out.println(tr);
+        addinTrTable(tr);
+       btnClear.fire();
+
 
     }
-
+    private void addinTrTable(TempTransaction tr) {
+        int index=-1;
+        for(TempTransaction t:trList){
+            if(t.getItem().getItemname().equals(tr.getItem().getItemname()) &&
+            t.getTableMaster().equals(tr.getTableMaster()) &&
+            t.getRate().equals(tr.getRate())){
+                index = trList.indexOf(t);
+            }
+        }
+        if(index==-1){
+            tempTransactionService.save(tr);
+            tr.setId((long) (trList.size()+1));
+            trList.add(tr);
+        }
+        else{
+            TempTransaction temp = tempTransactionService.getByItemAndTableAndRate(tr.getItem().getId(),tr.getTableMaster().getId(),tr.getRate());
+            System.out.println("Old Temp==> "+temp);
+            temp.setQuantity(temp.getQuantity()+tr.getQuantity());
+            temp.setAmount(temp.getAmount()+tr.getAmount());
+            temp.setPrintqty(temp.getPrintqty()+tr.getPrintqty());
+            tempTransactionService.save(temp);
+            trList.get(index).setQuantity(trList.get(index).getQuantity()+tr.getQuantity());
+            tableTransaction.refresh();
+        }
+        calculateNetTotal();
+    }
+    private void calculateNetTotal(){
+        Float net=0.0f;
+        for(TempTransaction tr:trList){
+          net +=tr.getAmount();
+        }
+        txtNetTotal.setText(String.valueOf(net));
+        calculateGrandTotal();
+    }
+    private void calculateGrandTotal(){
+        if(txtNetTotal.getText().isEmpty())txtNetTotal.setText(""+0.0f);
+        if(txtOther.getText().isEmpty())txtOther.setText(""+0.0f);
+        if(txtDiscount.getText().isEmpty())txtDiscount.setText(""+0.0f);
+        txtAmount.setText(
+                String.valueOf(
+                        Float.parseFloat(txtNetTotal.getText())+
+                                Float.parseFloat(txtOther.getText())-
+                                Float.parseFloat(txtDiscount.getText())
+                )
+        );
+    }
     private boolean validate() {
+        if(table==null){
+            alert.showError("Select Table First");
+            return false;
+        }
+        if(waitor==null){
+            alert.showError("Select Waitor Name ");
+            cmbWaitor.requestFocus();
+            return false;
+        }
         if(item==null){
             alert.showError("Select Item ");
             txtCategory.requestFocus();
@@ -271,7 +336,6 @@ public class BillingController implements Initializable {
         }
         return true;
     }
-
     private void searchCustomer() {
         if(!txtCustomer.getText().isEmpty()){
             customer = customerService.getByName(txtCustomer.getText());
@@ -300,11 +364,19 @@ public class BillingController implements Initializable {
         }
         return;
     }
-
     void setItem(Item item){
-        txtItem.setText(item.getItemname());
-        txtRate.setText(String.valueOf(item.getRate()));
-        txtCode.setText(String.valueOf(item.getItemcode()));
+        if(item==null){
+            txtCategory.setText("");
+            txtItem.setText("");
+            txtQuantity.setText("");
+            txtRate.setText("");
+            txtAmount.setText("");
+        }
+        else {
+            txtItem.setText(item.getItemname());
+            txtRate.setText(String.valueOf(item.getRate()));
+            txtCode.setText(String.valueOf(item.getItemcode()));
+        }
     }
     private void addAutoCompletion() {
         cmbWaitor.getItems().addAll(employeeService.getEmployeeNicknamesByDesignation("Waitor"));
@@ -366,12 +438,9 @@ public class BillingController implements Initializable {
     private void addTable(String group, TilePane tp) {
         for(Button button:tableButtonList){
             if(group.equalsIgnoreCase(button.getAccessibleText())){
-
                 tp.getChildren().add(button);
-
             }
         }
-
     }
     private void blink(Button button){
          ft = new FadeTransition(Duration.millis(500), button);
@@ -394,6 +463,7 @@ public class BillingController implements Initializable {
         Button button = (Button) e.getSource();
         System.out.println(button.getText());
         btnRunningTable.setText(button.getText());
-
+        table = tableMasterService.getByName(button.getText());
+        System.out.println(table);
     }
 }

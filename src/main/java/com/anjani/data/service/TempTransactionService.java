@@ -2,9 +2,12 @@ package com.anjani.data.service;
 
 import com.anjani.data.common.CommonData;
 import com.anjani.data.common.RestTemplateResponseErrorHandler;
+import com.anjani.data.entity.TableMaster;
 import com.anjani.data.entity.TempTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -34,5 +37,28 @@ public class TempTransactionService {
         Map<String,Integer> map = new HashMap<>();
         template.delete(CommonData.url+"/temptransaction/deletebytableid/{tableid}",map);
     }
+    public List<TempTransaction>deleteByTable(TableMaster table){
+        try {
+              template.exchange(CommonData.url+"/temptransaction/deletebytable",
+                      HttpMethod.DELETE,
+                      new HttpEntity<TableMaster>(table),
+                      TempTransaction[].class
+                      );
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    public TempTransaction getByItemAndTable(Long item,Integer table){
+        return template.getForObject(CommonData.url+"/temptransaction/byitemidandtableid/{item}/{table}",TempTransaction.class,item,table);
+    }
+    public TempTransaction getByItemAndTableAndRate(Long item,Integer table,Float rate){
+        return template.getForObject(CommonData.url+"/temptransaction/byitemidandtableidandrate/{item}/{table}/{rate}",TempTransaction.class,item,table,rate);
+    }
+    public void deleteById(Long id){
+        template.delete(CommonData.url+"/deletebyid/{id}",id);
+    }
+
+
 
 }

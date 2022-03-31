@@ -29,8 +29,12 @@ public class EmployeeService {
         return Arrays.asList(template.getForObject(CommonData.url+"/employee/allnicknamesbydesignation/{name}",String[].class,designation));
     }
     public Employee getByName(String name){
-        return template.getForObject(CommonData.url+"/byname/{name}",Employee.class,name);
+        return template.getForObject(CommonData.url+"/employee/byname/{name}",Employee.class,name);
     }
+    public Employee getByNickname(String name){
+        return template.getForObject(CommonData.url+"/employee/bynickname/{name}",Employee.class,name);
+    }
+
     public Employee save(Employee employee)
     {
         return template.postForObject(CommonData.url+"/employee/save",employee,Employee.class);

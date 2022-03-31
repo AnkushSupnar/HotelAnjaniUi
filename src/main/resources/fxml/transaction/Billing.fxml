@@ -90,6 +90,11 @@
                               <FontAwesomeIcon glyphName="PLUS" />
                            </graphic>
                         </Button>
+                        <Button fx:id="btnOrder" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" stylesheets="@../css/button.css" text="Aa^D-r">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="USER" />
+                           </graphic>
+                        </Button>
                         <Button fx:id="btnUpdate" mnemonicParsing="false" stylesheets="@../css/button.css" text="ApaDoT">
                            <graphic>
                               <FontAwesomeIcon glyphName="EDIT" />
