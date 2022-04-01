@@ -11,10 +11,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class TempTransactionService {
@@ -56,9 +53,19 @@ public class TempTransactionService {
         return template.getForObject(CommonData.url+"/temptransaction/byitemidandtableidandrate/{item}/{table}/{rate}",TempTransaction.class,item,table,rate);
     }
     public void deleteById(Long id){
-        template.delete(CommonData.url+"/deletebyid/{id}",id);
+        template.delete(CommonData.url+"/temptransaction/deletebyid/{id}",id);
     }
-
+    public List<TableMaster>getOpenTable(){
+        return Arrays.asList(template.getForObject(CommonData.url+"/temptransaction/getopentable",TableMaster[].class));
+    }
+    public List<String>getOpenTableNames(){
+        List<TableMaster>list =Arrays.asList(template.getForObject(CommonData.url+"/temptransaction/getopentable",TableMaster[].class));
+        List<String>names = new ArrayList<>();
+        for(TableMaster t:list){
+            names.add(t.getTablename());
+        }
+        return names;
+    }
 
 
 }

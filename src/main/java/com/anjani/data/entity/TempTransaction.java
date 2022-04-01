@@ -16,6 +16,7 @@ public class TempTransaction {
     private TableMaster tableMaster;
     private Float printqty;
     private Float rate;
+    private Employee employee;
 
 
 }

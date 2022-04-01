@@ -34,6 +34,7 @@ import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -98,17 +99,12 @@ public class BillingController implements Initializable {
     private ObservableList<TempTransaction>trList = FXCollections.observableArrayList();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         addTableGroup();
         addAutoCompletion();
         setProperties();
-        for(Button button:tableButtonList){
-            if(button.getText().equalsIgnoreCase("A1"))
-            {
-                System.out.println(button.getText());
-                button.setStyle("-fx-background-color:red");
-                blink(button);
-            }
-        }
+        getOpenTable();
+
     }
 
     private void showAddCustomer() {
@@ -175,6 +171,10 @@ public class BillingController implements Initializable {
                     System.out.println("Message== "+ex.getMessage());
                 }
                 if(item!=null)setItem(item);
+                else {
+                    txtItem.requestFocus();
+                    txtCode.setText("");
+                }
             }
         });
         txtItem.setOnAction(e->{
@@ -235,11 +235,67 @@ public class BillingController implements Initializable {
         txtAmount.setOnAction(e->add());
         btnAdd.setOnAction(e->add());
         btnClear.setOnAction(e->clear());
+        btnUpdate.setOnAction(e->update());
+        btnRemove.setOnAction(e->remove());
+
+        txtOther.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("\\d{0,100}([\\.]\\d{0,4})?")) {
+                    txtOther.setText(oldValue);
+                }
+            }
+        });
+        txtOther.setOnAction(e->{
+            calculateGrandTotal();
+            txtDiscount.requestFocus();
+        });
+        txtDiscount.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("\\d{0,100}([\\.]\\d{0,4})?")) {
+                    txtDiscount.setText(oldValue);
+                }
+            }
+        });
+        txtDiscount.setOnAction(e->{
+            calculateGrandTotal();
+            txtGrand.requestFocus();
+        });
+
+    }
+
+    private void remove() {
+        TempTransaction t = tableTransaction.getSelectionModel().getSelectedItem();
+        if(t!=null){
+            TempTransaction temp = tempTransactionService.getByItemAndTableAndRate(t.getItem().getId(),t.getTableMaster().getId(),t.getRate());
+            if(temp!=null){
+                tempTransactionService.deleteById(temp.getId());
+                loadTableData(t.getTableMaster());
+                calculateNetTotal();
+                //trList.remove(tableTransaction.getSelectionModel().getSelectedIndex());
+            }
+        }
+        getOpenTable();
+    }
+
+    private void update() {
+        if(tableTransaction.getSelectionModel().getSelectedItem()==null) return;
+        TempTransaction t = tableTransaction.getSelectionModel().getSelectedItem();
+        setItem(t.getItem());
+        txtQuantity.setText(String.valueOf(t.getQuantity()));
+        txtRate.setText(String.valueOf(t.getRate()));
+        txtAmount.setText(String.valueOf(t.getAmount()));
+        waitor = t.getEmployee();
+        System.out.println(waitor);
+        cmbWaitor.getSelectionModel().select(waitor.getNickname());
+
 
     }
     private void clear() {
          item = null;
          setItem(null);
+
     }
     private void add() {
         if(!validate()) return;
@@ -251,6 +307,7 @@ public class BillingController implements Initializable {
                 .printqty(Float.parseFloat(txtQuantity.getText()))
                 .quantity(Float.parseFloat(txtQuantity.getText()))
                 .tableMaster(table)
+                .employee(waitor)
                 .build();
        // System.out.println(tr);
         addinTrTable(tr);
@@ -271,6 +328,7 @@ public class BillingController implements Initializable {
             tempTransactionService.save(tr);
             tr.setId((long) (trList.size()+1));
             trList.add(tr);
+            getOpenTable();
         }
         else{
             TempTransaction temp = tempTransactionService.getByItemAndTableAndRate(tr.getItem().getId(),tr.getTableMaster().getId(),tr.getRate());
@@ -280,6 +338,7 @@ public class BillingController implements Initializable {
             temp.setPrintqty(temp.getPrintqty()+tr.getPrintqty());
             tempTransactionService.save(temp);
             trList.get(index).setQuantity(trList.get(index).getQuantity()+tr.getQuantity());
+            trList.get(index).setAmount(trList.get(index).getAmount()+tr.getAmount());
             tableTransaction.refresh();
         }
         calculateNetTotal();
@@ -296,7 +355,7 @@ public class BillingController implements Initializable {
         if(txtNetTotal.getText().isEmpty())txtNetTotal.setText(""+0.0f);
         if(txtOther.getText().isEmpty())txtOther.setText(""+0.0f);
         if(txtDiscount.getText().isEmpty())txtDiscount.setText(""+0.0f);
-        txtAmount.setText(
+        txtGrand.setText(
                 String.valueOf(
                         Float.parseFloat(txtNetTotal.getText())+
                                 Float.parseFloat(txtOther.getText())-
@@ -371,11 +430,13 @@ public class BillingController implements Initializable {
             txtQuantity.setText("");
             txtRate.setText("");
             txtAmount.setText("");
+            txtCode.setText("");
         }
         else {
             txtItem.setText(item.getItemname());
             txtRate.setText(String.valueOf(item.getRate()));
             txtCode.setText(String.valueOf(item.getItemcode()));
+            txtCategory.setText(item.getCatid().getCategory());
         }
     }
     private void addAutoCompletion() {
@@ -464,6 +525,40 @@ public class BillingController implements Initializable {
         System.out.println(button.getText());
         btnRunningTable.setText(button.getText());
         table = tableMasterService.getByName(button.getText());
+        loadTableData(table);
         System.out.println(table);
+    }
+    private void loadTableData(TableMaster table){
+        trList.clear();
+        trList.addAll(tempTransactionService.getByTableId(table.getId()));
+        Long id=0L;
+        for(TempTransaction tr:trList){
+            trList.get(trList.indexOf(tr)).setId(++id);
+            cmbWaitor.getSelectionModel().select(tr.getEmployee().getNickname());
+        }
+        calculateNetTotal();
+        tableTransaction.refresh();
+        getOpenTable();
+    }
+    private void getOpenTable(){
+        List<String> tableList = tempTransactionService.getOpenTableNames();
+        for(Button button:tableButtonList){
+            if(tableList.contains(button.getText())){
+                button.setStyle("-fx-background-color:#64DD17;-fx-border-color:#004D40;");
+            }
+            else{
+                button.setStyle("");
+            }
+        }
+    }
+    private void setColorTable(String table,String color){
+        for(Button button:tableButtonList){
+            if(button.getText().equalsIgnoreCase(table))
+            {
+                System.out.println(button.getText());
+                button.setStyle("-fx-background-color:"+color);
+               // blink(button);
+            }
+        }
     }
 }
