@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<DialogPane fx:id="dialog" contentText="Create Table" expanded="true" headerText="Add New Table" prefWidth="627.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.create.AddBankController">
+   <content>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+         <children>
+            <VBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="20.0" prefWidth="465.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Label alignment="CENTER_RIGHT" prefWidth="110.0" text="ba^Mkocao naava" textAlignment="JUSTIFY" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font name="Kiran" size="25.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txtBankName" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font name="Kiran" size="25.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="23.0" prefWidth="110.0" text="pattaa" textAlignment="RIGHT">
+                           <font>
+                              <Font name="Kiran" size="25.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txtAddress" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font name="Kiran" size="25.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="2.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Label alignment="CENTER_RIGHT" prefHeight="23.0" prefWidth="110.0" text="IFSC">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtIfsc" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font name="Kiran" size="25.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="2.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="93.0">
+                     <children>
+                        <Label alignment="CENTER_RIGHT" prefHeight="23.0" prefWidth="110.0" text="Aka{MT naM.">
+                           <font>
+                              <Font name="Kiran" size="25.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txtAccountNo" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font name="Kiran" size="25.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="2.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="176.0">
+                     <children>
+                        <Label alignment="CENTER_RIGHT" prefHeight="23.0" prefWidth="110.0" text="r@kma">
+                           <font>
+                              <Font name="Kiran" size="25.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txtBalance" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font name="Kiran" size="25.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="2.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" spacing="20.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Button fx:id="btnAdd" mnemonicParsing="false" prefWidth="100.0" stylesheets="@../css/button.css" text="saovh" textFill="WHITE">
+                           <graphic>
+                              <FontAwesomeIcon fill="WHITE" glyphName="SAVE" />
+                           </graphic>
+                           <font>
+                              <Font name="Kiran" size="25.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnUpdate" mnemonicParsing="false" prefWidth="100.0" stylesheets="@../css/button.css" text="ApaDoT" textFill="WHITE">
+                           <graphic>
+                              <FontAwesomeIcon fill="WHITE" glyphName="EDIT" />
+                           </graphic>
+                           <font>
+                              <Font name="Kiran" size="25.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnClear" mnemonicParsing="false" prefWidth="100.0" stylesheets="@../css/button.css" text="i@laAr" textFill="WHITE">
+                           <graphic>
+                              <FontAwesomeIcon fill="WHITE" glyphName="RECYCLE" />
+                           </graphic>
+                           <font>
+                              <Font name="Kiran" size="25.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </HBox>
+                  <TableView fx:id="table" prefHeight="300.0" tableMenuButtonVisible="true">
+                     <columns>
+                        <TableColumn fx:id="colId" prefWidth="39.20001220703125" text="ID" />
+                        <TableColumn fx:id="colName" prefWidth="148.00000762939453" text="Name" />
+                        <TableColumn fx:id="colAddress" prefWidth="157.5999755859375" text="Address" />
+                        <TableColumn fx:id="colIfsc" prefWidth="88.800048828125" text="IFSC" />
+                        <TableColumn fx:id="colAccountno" prefWidth="95.19998168945312" text="Account No" />
+                        <TableColumn fx:id="colBalance" prefWidth="67.20001220703125" text="Balance" />
+                     </columns>
+                  </TableView>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </content>
+   <header>
+      <StackPane style="-fx-background-color: #0275d8;">
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="naivana ba^Mk">
+               <font>
+                  <Font name="Kiran" size="30.0" />
+               </font>
+            </Text>
+         </children>
+      </StackPane>
+   </header>
+   <buttonTypes>
+      <ButtonType fx:constant="FINISH" />
+   </buttonTypes>
+</DialogPane>
