@@ -27,6 +27,9 @@ public class CustomerService {
     public Customer getByContact(String contact){
         return template.getForObject(CommonData.url+"/customer/bycontact/{contact}",Customer.class,contact);
     }
+    public Customer getById(Long id){
+        return template.getForObject(CommonData.url+"/customer/byid/{id}",Customer.class,id);
+    }
     public Customer getByMobile(String mobile){
        return template.getForObject(CommonData.url+"/customer/bymobile/{mobile}",Customer.class,mobile);
     }

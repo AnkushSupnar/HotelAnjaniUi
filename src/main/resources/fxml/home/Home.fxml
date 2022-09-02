@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="634.0" prefWidth="746.0" stylesheets="@../css/home.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.home.HomeController">
+<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="634.0" prefWidth="746.0" stylesheets="@../css/home.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.home.HomeController">
    <left>
       <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="256.0" styleClass="left" stylesheets="@../css/home.css" BorderPane.alignment="CENTER">
          <children>
@@ -108,6 +108,16 @@
                                        <children>
                                           <FontAwesomeIcon glyphName="TABLE" />
                                           <Label styleClass="name" text="naivana ga`ahk" HBox.hgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Kiran" size="25.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox fx:id="menuAddBank" layoutX="10.0" layoutY="132.0" prefHeight="30.0" prefWidth="214.0" spacing="10.0" styleClass="menu">
+                                       <children>
+                                          <FontAwesomeIcon glyphName="TABLE" />
+                                          <Label styleClass="name" text="naivana ba^Mk" HBox.hgrow="ALWAYS">
                                              <font>
                                                 <Font name="Kiran" size="25.0" />
                                              </font>

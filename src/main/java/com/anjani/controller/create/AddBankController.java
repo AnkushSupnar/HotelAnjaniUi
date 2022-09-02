@@ -9,10 +9,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Font;
+import javafx.util.Callback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 @Component
@@ -37,14 +40,122 @@ public class AddBankController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         colAccountno.setCellValueFactory(new PropertyValueFactory<>("accountno"));
+        colAccountno.setCellFactory(new Callback<TableColumn<Bank,String>, TableCell<Bank,String>>() {
+            @Override
+            public TableCell call(TableColumn param) {
+                return new TableCell<Bank, String>()
+                {
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if(isEmpty())
+                        {
+                            setText("");
+                        }
+                        else
+                        {
+                            setFont(Font.font ("kiran", 25));
+                            setText(String.valueOf(item));
+                        }
+                    }
+                };
+            }
+        });
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        colAddress.setCellFactory(new Callback<TableColumn<Bank,String>, TableCell<Bank,String>>() {
+            @Override
+            public TableCell call(TableColumn param) {
+                return new TableCell<Bank, String>()
+                {
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if(isEmpty())
+                        {
+                            setText("");
+                        }
+                        else
+                        {
+                            setFont(Font.font ("kiran", 25));
+                            setText(String.valueOf(item));
+                        }
+                    }
+                };
+            }
+        });
         colBalance.setCellValueFactory(new PropertyValueFactory<>("balance"));
+        colBalance.setCellFactory(new Callback<TableColumn<Bank,Float>, TableCell<Bank,Float>>() {
+            @Override
+            public TableCell call(TableColumn param) {
+                return new TableCell<Bank, Float>()
+                {
+                    @Override
+                    public void updateItem(Float item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if(isEmpty())
+                        {
+                            setText("");
+                        }
+                        else
+                        {
+                            setFont(Font.font ("kiran", 25));
+                            setText(String.valueOf(item));
+                        }
+                    }
+                };
+            }
+        });
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colId.setCellFactory(new Callback<TableColumn<Bank,Long>, TableCell<Bank,Long>>() {
+            @Override
+            public TableCell call(TableColumn param) {
+                return new TableCell<Bank, Long>()
+                {
+                    @Override
+                    public void updateItem(Long item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if(isEmpty())
+                        {
+                            setText("");
+                        }
+                        else
+                        {
+                            setFont(Font.font ("kiran", 25));
+                            setText(String.valueOf(item));
+                        }
+                    }
+                };
+            }
+        });
         colIfsc.setCellValueFactory(new PropertyValueFactory<>("ifsc"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colName.setCellFactory(new Callback<TableColumn<Bank,String>, TableCell<Bank,String>>() {
+            @Override
+            public TableCell call(TableColumn param) {
+                return new TableCell<Bank, String>()
+                {
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if(isEmpty())
+                        {
+                            setText("");
+                        }
+                        else
+                        {
+                            setFont(Font.font ("kiran", 25));
+                            setText(String.valueOf(item));
+                        }
+                    }
+                };
+            }
+        });
         list.addAll(bankService.getAll());
+        table.setItems(list);
 
         btnAdd.setOnAction(e->save());
+        btnClear.setOnAction(e->clear());
+        btnUpdate.setOnAction(e->update());
 
     }
 
@@ -58,6 +169,11 @@ public class AddBankController implements Initializable {
                 .name(txtBankName.getText()).build();
         if(id!=null){
             bank.setId(id);
+        }
+        if(bankService.save(bank)!=null){
+            clear();
+            loadAll();
+            alert.showSuccess("Bank Saved Success");
         }
     }
 
@@ -87,5 +203,26 @@ public class AddBankController implements Initializable {
         }
         return true;
     }
-
+    private void clear(){
+        txtIfsc.setText("");
+        txtBalance.setText("");
+        txtAddress.setText("");
+        txtBankName.setText("");
+        txtAccountNo.setText("");
+        id=null;
+    }
+    private void loadAll(){
+        list.clear();
+        list.addAll(bankService.getAll());
+    }
+    private void update(){
+        if(table.getSelectionModel().getSelectedItem()==null) return;
+        Bank bank = table.getSelectionModel().getSelectedItem();
+        txtBankName.setText(bank.getName());
+        txtAddress.setText(bank.getAddress());
+        txtAccountNo.setText(bank.getAccountno());
+        txtBalance.setText(""+bank.getBalance());
+        txtIfsc.setText(bank.getIfsc());
+        id=bank.getId();
+    }
 }
