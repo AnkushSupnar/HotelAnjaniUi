@@ -1,9 +1,13 @@
 package com.anjani.controller.transaction;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.anjani.config.SpringFXMLLoader;
 import com.anjani.controller.create.AddCustomerController;
+import com.anjani.data.common.CommonData;
+import com.anjani.data.common.Convertor;
 import com.anjani.data.entity.*;
 import com.anjani.data.service.*;
+import com.anjani.print.PrintQt;
 import com.anjani.view.AlertNotification;
 import com.anjani.view.StageManager;
 import impl.org.controlsfx.autocompletion.SuggestionProvider;
@@ -25,6 +29,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import javafx.util.Callback;
 import javafx.util.Duration;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
@@ -33,6 +38,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -47,7 +53,7 @@ public class BillingController implements Initializable {
     @FXML private SplitPane mainPane;
     @FXML private AnchorPane paneBilling,paneItem,paneTable;
     @FXML private VBox tableGroupBox;
-    @FXML private Button btnRunningTable,btnRemove,btnSave,btnSearchCustomer,btnShift,btnUpdate,btnUpdateBill;
+    @FXML private Button btnRunningTable,btnRemove,btnSave,btnSearchCustomer,btnShift,btnUpdate,btnUpdateBill,btnClose,btnExit;
 
     @FXML private Button btnAdd,btnOrder,btnAddCustomer,btnClear,btnClearBill,btnOldBillPrint,btnPrint;
     @FXML private ComboBox<String> cmbBankName;
@@ -70,11 +76,11 @@ public class BillingController implements Initializable {
 
 
     @FXML private TextField txtAmount,txtCategory,txtCustomer,txtItem,txtCode;
-    @FXML private MFXTextField txtDiscount,txtGrand;
-    @FXML private MFXTextField txtNetTotal;
-    @FXML private MFXTextField txtOther;
+    @FXML private TextField txtDiscount,txtGrand;
+    @FXML private TextField txtNetTotal;
+    @FXML private TextField txtOther;
     @FXML private TextField txtPhone,txtQuantity,txtRate;
-    @FXML private MFXTextField txtRecieved,txtRemaining;
+    @FXML private TextField txtRecieved,txtRemaining;
     @FXML private ComboBox<String> cmbWaitor;
 
     @Autowired private TableGroupService groupService;
@@ -84,8 +90,13 @@ public class BillingController implements Initializable {
     @Autowired private EmployeeService employeeService;
     @Autowired private CustomerService customerService;
     @Autowired private TempTransactionService tempTransactionService;
+    @Autowired private PrintQt printQt;
+
 
     @Autowired private AlertNotification alert;
+    @Autowired private BankService bankService;
+    @Autowired private BillService billService;
+
     private TableMaster table;
     private ObservableList<Button>tableButtonList = FXCollections.observableArrayList();
     private SuggestionProvider<String>catNames;
@@ -99,14 +110,15 @@ public class BillingController implements Initializable {
     private ObservableList<TempTransaction>trList = FXCollections.observableArrayList();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        waitor = null;
         addTableGroup();
         addAutoCompletion();
         setProperties();
         getOpenTable();
+        addButtonToTablePlus();
+        addButtonToTableMinus();
 
     }
-
     private void showAddCustomer() {
         DialogPane pane =   fxmlLoader.getDialogPage("/fxml/create/AddCustomer.fxml");
         AddCustomerController dialog = fxmlLoader.getLoader().getController();
@@ -132,7 +144,7 @@ public class BillingController implements Initializable {
     }
     private void setProperties() {
 
-        colItemName.setCellValueFactory(cellData->new SimpleStringProperty(cellData.getValue().getItem().getItemname()));
+        colItemName.setCellValueFactory(cellData->new SimpleStringProperty(cellData.getValue().getItemname()));
         colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         colRate.setCellValueFactory(new PropertyValueFactory<>("rate"));
         colSrNo.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -145,6 +157,7 @@ public class BillingController implements Initializable {
                 System.out.println(waitor);
             }
         });
+
         btnSearchCustomer.setOnAction(e->searchCustomer());
         btnAddCustomer.setOnAction(e->showAddCustomer());
         txtCode.textProperty().addListener(new ChangeListener<String>() {
@@ -237,6 +250,7 @@ public class BillingController implements Initializable {
         btnClear.setOnAction(e->clear());
         btnUpdate.setOnAction(e->update());
         btnRemove.setOnAction(e->remove());
+        btnOrder.setOnAction(e->order());
 
         txtOther.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -262,13 +276,49 @@ public class BillingController implements Initializable {
             calculateGrandTotal();
             txtGrand.requestFocus();
         });
+        txtRecieved.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("\\d{0,100}([\\.]\\d{0,4})?")) {
+                    txtRecieved.setText(oldValue);
+                }
+            }
+        });
+        txtRecieved.setOnAction(e->{
+            if(txtGrand.getText().isEmpty()){return;}
+            txtRemaining.setText(
+                    String.valueOf(
+                            Float.parseFloat(txtGrand.getText())-Float.parseFloat(txtRecieved.getText())
+                    )
+            );
+        });
 
+        btnClose.setOnAction(e->closeBill());
     }
+    private void order() {
+        if(table == null){
+            alert.showError("Select Table First");
+            return;
+        }
 
+        int flag =0;
+        for(TempTransaction tr:trList){
+
+            if(tr.getPrintqty()>0){
+                flag=1;
+               // return;
+            }
+        }
+        List<TempTransaction>orderList =tempTransactionService.getOrder(table.getId());
+        if(!orderList.isEmpty()){
+            printQt.printQt(tempTransactionService.getOrder(table.getId()));
+            tempTransactionService.resetPrintQuantity(table.getId());
+        }
+    }
     private void remove() {
         TempTransaction t = tableTransaction.getSelectionModel().getSelectedItem();
         if(t!=null){
-            TempTransaction temp = tempTransactionService.getByItemAndTableAndRate(t.getItem().getId(),t.getTableMaster().getId(),t.getRate());
+            TempTransaction temp = tempTransactionService.getByItemAndTableAndRate(t.getItemname(),t.getTableMaster().getId(),t.getRate());
             if(temp!=null){
                 tempTransactionService.deleteById(temp.getId());
                 loadTableData(t.getTableMaster());
@@ -278,19 +328,18 @@ public class BillingController implements Initializable {
         }
         getOpenTable();
     }
-
     private void update() {
         if(tableTransaction.getSelectionModel().getSelectedItem()==null) return;
         TempTransaction t = tableTransaction.getSelectionModel().getSelectedItem();
-        setItem(t.getItem());
+        System.out.println("GOt item in item=>"+itemService.getItemByName(t.getItemname()));
+        setItem(itemService.getItemByName(t.getItemname()));
         txtQuantity.setText(String.valueOf(t.getQuantity()));
         txtRate.setText(String.valueOf(t.getRate()));
         txtAmount.setText(String.valueOf(t.getAmount()));
         waitor = t.getEmployee();
-        System.out.println(waitor);
         cmbWaitor.getSelectionModel().select(waitor.getNickname());
-
-
+        System.out.println("in update item");
+        setItem(itemService.getItemByName(t.getItemname()));
     }
     private void clear() {
          item = null;
@@ -298,11 +347,17 @@ public class BillingController implements Initializable {
 
     }
     private void add() {
+
         if(!validate()) return;
+        //check table is closed or not if first entry
        // item.setRate(Float.parseFloat(txtRate.getText()));
+        System.out.println("in Add "+waitor);
+        txtAmount.setText(String.valueOf(
+                Float.parseFloat(txtQuantity.getText())*Float.parseFloat(txtRate.getText()))
+        );
         TempTransaction tr = TempTransaction.builder()
                 .amount(Float.parseFloat(txtAmount.getText()))
-                .item(item)
+                .itemname(item.getItemname())
                 .rate(Float.parseFloat(txtRate.getText()))
                 .printqty(Float.parseFloat(txtQuantity.getText()))
                 .quantity(Float.parseFloat(txtQuantity.getText()))
@@ -312,34 +367,41 @@ public class BillingController implements Initializable {
        // System.out.println(tr);
         addinTrTable(tr);
        btnClear.fire();
-
-
     }
     private void addinTrTable(TempTransaction tr) {
         int index=-1;
         for(TempTransaction t:trList){
-            if(t.getItem().getItemname().equals(tr.getItem().getItemname()) &&
+            if(t.getItemname().equals(tr.getItemname()) &&
             t.getTableMaster().equals(tr.getTableMaster()) &&
             t.getRate().equals(tr.getRate())){
                 index = trList.indexOf(t);
+               // break;
             }
         }
-        if(index==-1){
+        if(index==-1){//this is first entry
             tempTransactionService.save(tr);
             tr.setId((long) (trList.size()+1));
             trList.add(tr);
             getOpenTable();
         }
         else{
-            TempTransaction temp = tempTransactionService.getByItemAndTableAndRate(tr.getItem().getId(),tr.getTableMaster().getId(),tr.getRate());
+            TempTransaction temp = tempTransactionService.getByItemAndTableAndRate(tr.getItemname(),tr.getTableMaster().getId(),tr.getRate());
             System.out.println("Old Temp==> "+temp);
-            temp.setQuantity(temp.getQuantity()+tr.getQuantity());
-            temp.setAmount(temp.getAmount()+tr.getAmount());
-            temp.setPrintqty(temp.getPrintqty()+tr.getPrintqty());
-            tempTransactionService.save(temp);
-            trList.get(index).setQuantity(trList.get(index).getQuantity()+tr.getQuantity());
-            trList.get(index).setAmount(trList.get(index).getAmount()+tr.getAmount());
-            tableTransaction.refresh();
+            if(temp!=null) {
+                temp.setQuantity(temp.getQuantity() + tr.getQuantity());
+               // System.out.println("Got tem="+temp.getQuantity()+" tr="+tr.getQuantity());
+                temp.setAmount(temp.getAmount() + tr.getAmount());
+                temp.setPrintqty(temp.getPrintqty() + tr.getPrintqty());
+                tempTransactionService.save(temp);
+                trList.get(index).setQuantity(trList.get(index).getQuantity() + tr.getQuantity());
+                trList.get(index).setAmount(trList.get(index).getAmount() + tr.getAmount());
+                tableTransaction.refresh();
+            }
+            else{
+            tr.setId((long) (trList.size()+1));
+            trList.add(tr);
+            tempTransactionService.save(tr);
+            }
         }
         calculateNetTotal();
     }
@@ -373,6 +435,12 @@ public class BillingController implements Initializable {
             cmbWaitor.requestFocus();
             return false;
         }
+        if(waitor.getId()==null){
+            alert.showError("Select Waitor Name ");
+            cmbWaitor.requestFocus();
+            return false;
+        }
+
         if(item==null){
             alert.showError("Select Item ");
             txtCategory.requestFocus();
@@ -424,6 +492,7 @@ public class BillingController implements Initializable {
         return;
     }
     void setItem(Item item){
+        System.out.println("in set item"+item);
         if(item==null){
             txtCategory.setText("");
             txtItem.setText("");
@@ -437,10 +506,12 @@ public class BillingController implements Initializable {
             txtRate.setText(String.valueOf(item.getRate()));
             txtCode.setText(String.valueOf(item.getItemcode()));
             txtCategory.setText(item.getCatid().getCategory());
+            this.item = item;
         }
     }
     private void addAutoCompletion() {
         cmbWaitor.getItems().addAll(employeeService.getEmployeeNicknamesByDesignation("Waitor"));
+        cmbBankName.getItems().addAll(bankService.getAllBankName());
         catNames = SuggestionProvider.create(categoryService.getAllCategoryNames());
         AutoCompletionBinding<String> catAuto = TextFields.bindAutoCompletion(txtCategory,catNames);
         catAuto.prefWidthProperty().bind(this.txtCategory.widthProperty());
@@ -530,22 +601,56 @@ public class BillingController implements Initializable {
     }
     private void loadTableData(TableMaster table){
         trList.clear();
+        cmbWaitor.getSelectionModel().clearSelection();
         trList.addAll(tempTransactionService.getByTableId(table.getId()));
         Long id=0L;
-        for(TempTransaction tr:trList){
-            trList.get(trList.indexOf(tr)).setId(++id);
-            cmbWaitor.getSelectionModel().select(tr.getEmployee().getNickname());
-        }
+        //if(trList.size()==0){//get data from closed bill
+            Bill bill = billService.getByTableNameAndStatus(table.getTablename(),"closed");
+            if(bill!=null) {
+                if (bill.getTransactions().size() != 0) {
+                   // trList.clear();
+                    id = (long) trList.size();
+                    for (Transaction t : bill.getTransactions()) {
+                        TempTransaction temp = new TempTransaction();
+                        temp.setId(++id);
+                        temp.setItemname(t.getItemname());
+                        temp.setQuantity(t.getQuantity());
+                        temp.setAmount(t.getQuantity() * t.getRate());
+                        temp.setTableMaster(table);
+                        temp.setPrintqty(0.0f);
+                        temp.setRate(t.getRate());
+                        temp.setEmployee(bill.getWaitor());
+                       // tempTransactionService.save(temp);
+                        trList.add(temp);
+                    }
+                }
+            }
+       // }else {
+        id=0l;
+            for (TempTransaction tr : trList) {
+                trList.get(trList.indexOf(tr)).setId(++id);
+                cmbWaitor.getSelectionModel().select(tr.getEmployee().getNickname());
+            }
+        //}
+        waitor = employeeService.getByNickname(cmbWaitor.getValue());
         calculateNetTotal();
         tableTransaction.refresh();
         getOpenTable();
     }
     private void getOpenTable(){
         List<String> tableList = tempTransactionService.getOpenTableNames();
+        List<String>closedTable = new ArrayList<>();
+        for(Bill bill: billService.getByStatus("closed")){
+            closedTable.add(bill.getTable().getTablename());
+        }
         for(Button button:tableButtonList){
             if(tableList.contains(button.getText())){
                 button.setStyle("-fx-background-color:#64DD17;-fx-border-color:#004D40;");
+            }else
+            if(closedTable.contains(button.getText())){
+                button.setStyle("-fx-background-color:red;-fx-border-color:red;");
             }
+
             else{
                 button.setStyle("");
             }
@@ -561,4 +666,204 @@ public class BillingController implements Initializable {
             }
         }
     }
+    private void closeBill() {
+       if(!validateBill()) return;
+        Bill bill = billService.getClosedBillByTableid(table.getId());
+       //Bill bill = new Bill();
+        List<Transaction> tr = new ArrayList<>();
+        if(bill ==null){
+            bill = new Bill();
+            System.out.println("creating ne bill");
+        }
+        else{
+            System.out.println("Not creating ne bill");
+        }
+        bill.setBank(bankService.getById(1L));
+        bill.setCustomer(customer);
+        bill.setDate(date.getValue());
+        bill.setDiscount(Float.parseFloat(txtDiscount.getText()));
+        bill.setGrandtotal(Float.parseFloat(txtGrand.getText()));
+        bill.setNetamount(Float.parseFloat(txtNetTotal.getText()));
+        bill.setPaid(0.0f);
+        bill.setStatus("closed");
+        bill.setWaitor(waitor);
+        bill.setLogin(CommonData.login.getEmployee());
+        bill.setTable(table);
+        for(TempTransaction e:tempTransactionService.getByTableId(table.getId())){
+            int index =findTempTransactionInTransaction(e,bill.getTransactions());
+            System.out.println("close transaction "+index);
+            if(index!=-1){
+                System.out.println("changing in transaction "+index);
+                Transaction t = bill.getTransactions().get(index);
+                t.setQuantity(e.getQuantity()+t.getQuantity());
+                bill.getTransactions().remove(index);
+                bill.getTransactions().add(index,t);
+            }else {
+                Transaction t = new Transaction();
+                t.setAmount(e.getAmount());
+                t.setQuantity(e.getQuantity());
+                t.setItemname(e.getItemname());
+                t.setRate(e.getRate());
+                t.setBill(bill);
+               // tr.add(t);
+                bill.getTransactions().add(t);
+            }
+        }
+        //bill.setTransactions(tr);
+       Bill  closed = billService.saveBill(bill);
+        if(closed!=null){
+            tempTransactionService.deleteByTable(bill.getTable());
+            getOpenTable();
+
+            tableTransaction.refresh();
+            alert.showSuccess("Table Cosed");
+        }
+        else{
+            alert.showError("Error in Table closing");
+        }
+    }
+    private int findTempTransactionInTransaction(TempTransaction temp,List<Transaction>transList){
+        for(Transaction tr:transList){
+            if(tr.getItemname().equals(temp.getItemname()) && tr.getRate().equals(temp.getRate())){
+                System.out.println("Found in transaction "+temp.getItemname());
+               return transList.indexOf(tr);
+            }
+        }
+        return -1;
+    }
+    private boolean validateBill(){
+        if(btnRunningTable.getText().equalsIgnoreCase("table")){
+            alert.showError("Select Table");
+            return false;
+        }
+        if(trList.isEmpty()){
+            alert.showError("No data to save");
+            return false;
+        }
+        if(waitor==null){
+            alert.showError("Select Waitor");
+            return false;
+        }
+        if(customer==null){
+            customer = customerService.getById(1L);
+        }
+        if(date.getValue()==null){
+            date.setValue(LocalDate.now());
+        }
+        if(table==null){
+            alert.showError("Select Opened Table");
+            return false;
+        }
+
+        return true;
+    }
+    private void addButtonToTablePlus() {
+        TableColumn<TempTransaction, Void> colBtn = new TableColumn("Add");
+
+        Callback<TableColumn<TempTransaction, Void>, TableCell<TempTransaction, Void>> cellFactory = new Callback<TableColumn<TempTransaction, Void>, TableCell<TempTransaction, Void>>() {
+            @Override
+            public TableCell<TempTransaction, Void> call(final TableColumn<TempTransaction, Void> param) {
+                final TableCell<TempTransaction, Void> cell = new TableCell<TempTransaction, Void>() {
+
+                    private final Button btn = new Button("+1");
+                    {
+                        btn.setStyle("-fx-font: 18 Georgia; -fx-base: #5cb85c;");
+                        btn.setOnAction((ActionEvent event) -> {
+                            TempTransaction data = getTableView().getItems().get(getIndex());
+                            tableTransaction.getSelectionModel().select(getIndex());
+                            System.out.println("selectedData: " + data);
+                            btnUpdate.fire();
+
+                            txtQuantity.setText(""+1.0f);
+                            System.out.println(item);
+                            btnAdd.fire();
+                            tableTransaction.getSelectionModel().clearSelection();
+                        });
+                    }
+
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colBtn.setCellFactory(cellFactory);
+
+        tableTransaction.getColumns().add(colBtn);
+
+    }
+
+    private void addButtonToTableMinus() {
+        TableColumn<TempTransaction, Void> colBtn = new TableColumn("Minus");
+
+        Callback<TableColumn<TempTransaction, Void>, TableCell<TempTransaction, Void>> cellFactory = new Callback<TableColumn<TempTransaction, Void>, TableCell<TempTransaction, Void>>() {
+            @Override
+            public TableCell<TempTransaction, Void> call(final TableColumn<TempTransaction, Void> param) {
+                final TableCell<TempTransaction, Void> cell = new TableCell<TempTransaction, Void>() {
+
+                    private final Button btn = new Button("-1");
+                    {
+                      //  btn.setStyle("-fx-font-size:16");
+                        btn.setStyle("-fx-font: 18 Georgia; -fx-base:#d9534f;");
+                        btn.setMaxWidth(40);
+                        btn.setMaxHeight(40);
+                        btn.setOnAction((ActionEvent event) -> {
+                            TempTransaction data = getTableView().getItems().get(getIndex());
+                            tableTransaction.getSelectionModel().select(getIndex());
+                            System.out.println("selectedData: " + data);
+                            int index = -1;
+                            List<TempTransaction>tempList = tempTransactionService.getByTableId(table.getId());
+                            for(TempTransaction tr:tempList){
+                                if(tr.getItemname().equals(data.getItemname())&& tr.getRate().equals(data.getRate())){
+                                    index=tempList.indexOf(tr);
+                                }
+                            }
+                            if(index==-1){
+                                alert.showError("Item Can not be remove or reduce");
+                            }else{
+                                if(data.getQuantity()==1){
+                                    remove();
+
+                                }else {
+                                   data.setQuantity(data.getQuantity()-1);
+                                   data.setAmount(data.getQuantity()*data.getRate());
+                                   update();
+                                   txtQuantity.setText(""+data.getQuantity());
+
+                                   remove();
+                                   add();
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colBtn.setCellFactory(cellFactory);
+
+        tableTransaction.getColumns().add(colBtn);
+
+    }
+
 }

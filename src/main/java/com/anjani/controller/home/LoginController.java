@@ -53,6 +53,7 @@ public class LoginController implements Initializable {
         Login login = loginService.validateLogin(cmbUserName.getValue(),txtPassword.getText());
         if(login!=null){
             alert.showSuccess("Wel come "+cmbUserName.getValue());
+            CommonData.login = login;
             stageManager.switchScene(FxmlView.HOME);
         }
         else{

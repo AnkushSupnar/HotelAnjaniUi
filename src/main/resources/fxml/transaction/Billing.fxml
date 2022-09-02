@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
-<?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -20,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane fx:id="mainPane" dividerPositions="0.3064812385200735, 0.816845972185778" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="781.0" prefWidth="1526.0" stylesheets="@../css/tablebutton.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.transaction.BillingController">
+<SplitPane fx:id="mainPane" dividerPositions="0.3064812385200735, 0.816845972185778" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="781.0" prefWidth="1526.0" stylesheets="@../css/tablebutton.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.transaction.BillingController">
   <items>
     <AnchorPane fx:id="paneTable" minHeight="0.0" minWidth="0.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
          <children>
@@ -130,47 +129,52 @@
             </TableView>
             <Pane layoutY="474.0" prefHeight="150.0" prefWidth="772.0" styleClass="box" stylesheets="@../css/box.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
-                  <HBox layoutY="2.0">
+                  <HBox layoutX="6.0" layoutY="19.0" spacing="10.0">
                      <children>
-                        <MFXTextField fx:id="txtNetTotal" allowEdit="false" floatMode="BORDER" floatingText="Net Total" prefHeight="40.0" prefWidth="160.0">
+                        <TextField fx:id="txtNetTotal" prefWidth="150.0" text="10000">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
-                        </MFXTextField>
-                        <MFXTextField fx:id="txtOther" floatMode="BORDER" floatingText="Other Charges" prefHeight="40.0" prefWidth="160.0">
+                        </TextField>
+                        <TextField fx:id="txtOther" prefWidth="150.0">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
-                        </MFXTextField>
-                        <MFXTextField fx:id="txtDiscount" floatMode="BORDER" floatingText="Discount" prefHeight="33.0" prefWidth="160.0">
+                        </TextField>
+                        <TextField fx:id="txtDiscount" prefWidth="150.0">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
-                        </MFXTextField>
-                        <MFXTextField fx:id="txtGrand" allowEdit="false" floatMode="BORDER" floatingText="Grand Total" prefHeight="29.0" prefWidth="160.0">
+                        </TextField>
+                        <TextField fx:id="txtGrand" prefWidth="150.0">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
-                        </MFXTextField>
+                        </TextField>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" layoutX="5.0" layoutY="55.0">
+                  <HBox alignment="CENTER" layoutX="5.0" layoutY="62.0" spacing="10.0">
                      <children>
-                        <ComboBox fx:id="cmbBankName" prefHeight="30.0" prefWidth="160.0" promptText="ba^Mkocao naava" stylesheets="@../css/combobox.css" HBox.hgrow="ALWAYS" />
-                        <MFXTextField fx:id="txtRecieved" floatMode="BORDER" floatingText="Recieved Amount" prefHeight="50.0" prefWidth="160.0">
+                        <ComboBox fx:id="cmbBankName" prefHeight="33.0" prefWidth="151.0" promptText="ba^Mkocao naava" stylesheets="@../css/combobox.css" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="txtRecieved" prefWidth="150.0">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
-                        </MFXTextField>
-                        <MFXTextField fx:id="txtRemaining" floatMode="BORDER" floatingText="Remaining Amount" prefHeight="50.0" prefWidth="160.0">
+                        </TextField>
+                        <TextField fx:id="txtRemaining" prefWidth="150.0">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
-                        </MFXTextField>
+                        </TextField>
                      </children>
                   </HBox>
                   <HBox layoutX="14.0" layoutY="110.0" spacing="10.0">
                      <children>
+                        <Button fx:id="btnClose" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" stylesheets="@../css/button.css" text="\@laaoja">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="CLOSE" />
+                           </graphic>
+                        </Button>
                         <Button fx:id="btnSave" mnemonicParsing="false" stylesheets="@../css/button.css" text="saovh">
                            <graphic>
                               <FontAwesomeIcon glyphName="SAVE" />
@@ -201,8 +205,17 @@
                               <FontAwesomeIcon glyphName="SEARCH" />
                            </graphic>
                         </Button>
+                        <Button fx:id="btnExit" layoutX="584.0" layoutY="10.0" mnemonicParsing="false" stylesheets="@../css/button.css" text="baahor">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="HOME" />
+                           </graphic>
+                        </Button>
                      </children>
                   </HBox>
+                  <Label layoutX="14.0" layoutY="2.0" text="Net Total" />
+                  <Label layoutX="171.0" layoutY="2.0" text="Other Charges" />
+                  <Label layoutX="327.0" layoutY="2.0" text="Discount" />
+                  <Label layoutX="488.0" layoutY="2.0" text="Grand Total" />
                </children>
             </Pane>
             <TableView fx:id="tableOldBill" layoutX="37.0" layoutY="625.0" prefHeight="154.0" prefWidth="200.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="625.0">

@@ -1,5 +1,6 @@
 package com.anjani.data.common;
 
+import com.anjani.data.entity.Login;
 import org.springframework.stereotype.Component;
 
 import java.io.FileReader;
@@ -7,7 +8,8 @@ import java.util.Properties;
 
 @Component
 public class CommonData {
-    public static String url;//="http://localhost:8080/";
+    public static String url;//="http://localhost:8282/";
+    public static Login login = new Login();
     public static void readFile()
     {
         try {

@@ -10,13 +10,15 @@ import lombok.*;
 @ToString
 public class TempTransaction {
     private Long id;
-    private Item item;
+    String itemname;
     private Float quantity;
+    private Float rate;
     private Float amount;
     private TableMaster tableMaster;
-    private Float printqty;
-    private Float rate;
     private Employee employee;
+    private Float printqty;
+
+
 
 
 }

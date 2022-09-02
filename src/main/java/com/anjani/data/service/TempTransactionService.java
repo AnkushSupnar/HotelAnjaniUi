@@ -49,8 +49,8 @@ public class TempTransactionService {
     public TempTransaction getByItemAndTable(Long item,Integer table){
         return template.getForObject(CommonData.url+"/temptransaction/byitemidandtableid/{item}/{table}",TempTransaction.class,item,table);
     }
-    public TempTransaction getByItemAndTableAndRate(Long item,Integer table,Float rate){
-        return template.getForObject(CommonData.url+"/temptransaction/byitemidandtableidandrate/{item}/{table}/{rate}",TempTransaction.class,item,table,rate);
+    public TempTransaction getByItemAndTableAndRate(String itemname,Integer table,Float rate){
+        return template.getForObject(CommonData.url+"/temptransaction/byitemidandtableidandrate/{itemname}/{table}/{rate}",TempTransaction.class,itemname,table,rate);
     }
     public void deleteById(Long id){
         template.delete(CommonData.url+"/temptransaction/deletebyid/{id}",id);
@@ -66,6 +66,14 @@ public class TempTransactionService {
         }
         return names;
     }
-
+    public List<TempTransaction>getOrder(Integer tableid){
+        return Arrays.asList(template.getForObject(CommonData.url+"/temptransaction/getorder/{id}",TempTransaction[].class,tableid));
+    }
+    public int resetPrintQuantity(Integer tableid){
+        Map < String, Integer > params = new HashMap < String, Integer>();
+        params.put("tableid", tableid);
+        template.put(CommonData.url+"/temptransaction/resetPrintQuantity/{tableid}",null,params);
+        return 1;
+    }
 
 }
