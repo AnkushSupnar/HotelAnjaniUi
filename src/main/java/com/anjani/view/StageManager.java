@@ -48,6 +48,7 @@ public class StageManager {
     private void show(Parent rootnode, String title) {
         Scene scene = prepareScene(rootnode);
         scene.getStylesheets().add(getClass().getResource("/fxml/css/tablebutton.css").toExternalForm());
+      //  scene.getStylesheets().add(getClass().getResource("/fxml/css/button.css").toExternalForm());
         primaryStage.setTitle(title);
         primaryStage.setScene(scene);
         primaryStage.sizeToScene();

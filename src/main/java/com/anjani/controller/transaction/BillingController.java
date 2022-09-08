@@ -83,6 +83,22 @@ public class BillingController implements Initializable {
     @FXML private TextField txtRecieved,txtRemaining;
     @FXML private ComboBox<String> cmbWaitor;
 
+    @FXML
+    private ListView<String> listCategory;
+    @FXML
+    private ListView<String>listItem;
+    @FXML
+    private ListView<Button> listQuantity;
+    @FXML
+    private TabPane tabpaneItem;
+    @FXML
+    private Tab tabCategory;
+    @FXML
+    private Tab tabQuantity;
+    @FXML
+    private Tab tabItem;
+
+
     @Autowired private TableGroupService groupService;
     @Autowired private TableMasterService tableMasterService;
     @Autowired private ItemService itemService;
@@ -96,10 +112,13 @@ public class BillingController implements Initializable {
     @Autowired private AlertNotification alert;
     @Autowired private BankService bankService;
     @Autowired private BillService billService;
+    @Autowired LoginService loginService;
 
     private TableMaster table;
     private ObservableList<Button>tableButtonList = FXCollections.observableArrayList();
     private SuggestionProvider<String>catNames;
+    private ObservableList<String>catObsList = FXCollections.observableArrayList();
+    private ObservableList<String>itemObsList = FXCollections.observableArrayList();
     private SuggestionProvider<String>itemNames;
     private SuggestionProvider<String>waitorNames;
     private SuggestionProvider<String>customerNames;
@@ -111,13 +130,63 @@ public class BillingController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         waitor = null;
+        customer =null;
+        date.setValue(LocalDate.now());
         addTableGroup();
         addAutoCompletion();
         setProperties();
         getOpenTable();
         addButtonToTablePlus();
         addButtonToTableMinus();
-
+        loadCategoryList();
+    }
+    private void loadCategoryList(){
+        catObsList.addAll(categoryService.getAllCategoryNames());
+        listCategory.setItems(catObsList);
+        listCategory.setOnMouseClicked(e->{
+            listItem.getItems().clear();
+            itemObsList.addAll(itemService.getItemNamesByCategoryName(listCategory.getSelectionModel().getSelectedItem()));
+            listItem.setItems(itemObsList);
+            listItem.requestFocus();
+            SingleSelectionModel<Tab>selectionModel = tabpaneItem.getSelectionModel();
+            selectionModel.select(tabItem);
+        });
+        listItem.setOnMouseClicked(e->{
+            tabpaneItem.getSelectionModel().select(tabQuantity);
+        });
+        ObservableList<Button>qtyList = FXCollections.observableArrayList();
+        for(int i=1;i<=10;i++){
+            Button b = new Button();
+            //b.setText(""+i);
+            if(i==10)b.setText(""+0);
+            else b.setText(""+i);
+           b.setMaxHeight(70);
+           b.setMaxWidth(100);
+           b.setStyle("-fx-font-size:20");
+            //b.setMinHeight(100);
+            //b.setMaxWidth(100);
+            qtyList.add(b);
+            b.setOnAction(e->{
+                if(listItem.getSelectionModel().getSelectedItem()==null){
+                    tabpaneItem.getSelectionModel().select(tabQuantity);
+                    if(itemObsList.isEmpty()){
+                        tabpaneItem.getSelectionModel().select(tabCategory);
+                    }
+                    else{
+                        tabpaneItem.getSelectionModel().select(tabItem);
+                    }
+                    return;
+                }
+                String item = listItem.getSelectionModel().getSelectedItem();
+                setItem(itemService.getItemByName(item));
+                txtQuantity.setText(""+Float.parseFloat(b.getText()));
+                txtAmount.setText(String.valueOf(
+                        Float.parseFloat(txtQuantity.getText())*Float.parseFloat(txtRate.getText()))
+                );
+                btnAdd.fire();
+            });
+        }
+        listQuantity.setItems(qtyList);
     }
     private void showAddCustomer() {
         DialogPane pane =   fxmlLoader.getDialogPage("/fxml/create/AddCustomer.fxml");
@@ -150,7 +219,6 @@ public class BillingController implements Initializable {
         colSrNo.setCellValueFactory(new PropertyValueFactory<>("id"));
         colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         tableTransaction.setItems(trList);
-
         cmbWaitor.setOnAction(e->{
             if(cmbWaitor.getValue()!=null){
                 waitor = employeeService.getByNickname(cmbWaitor.getValue());
@@ -288,12 +356,14 @@ public class BillingController implements Initializable {
             if(txtGrand.getText().isEmpty()){return;}
             txtRemaining.setText(
                     String.valueOf(
-                            Float.parseFloat(txtGrand.getText())-Float.parseFloat(txtRecieved.getText())
+                            Float.parseFloat(txtRecieved.getText())-Float.parseFloat(txtGrand.getText())
                     )
             );
         });
 
         btnClose.setOnAction(e->closeBill());
+        btnSave.setOnAction(e->saveBill());
+
     }
     private void order() {
         if(table == null){
@@ -370,11 +440,14 @@ public class BillingController implements Initializable {
     }
     private void addinTrTable(TempTransaction tr) {
         int index=-1;
+        System.out.println(tr);
         for(TempTransaction t:trList){
+            System.out.println(t);
             if(t.getItemname().equals(tr.getItemname()) &&
-            t.getTableMaster().equals(tr.getTableMaster()) &&
+            t.getTableMaster().getId().equals(tr.getTableMaster().getId()) &&
             t.getRate().equals(tr.getRate())){
                 index = trList.indexOf(t);
+                System.out.println("Got Index=====>"+index);
                // break;
             }
         }
@@ -386,7 +459,7 @@ public class BillingController implements Initializable {
         }
         else{
             TempTransaction temp = tempTransactionService.getByItemAndTableAndRate(tr.getItemname(),tr.getTableMaster().getId(),tr.getRate());
-            System.out.println("Old Temp==> "+temp);
+
             if(temp!=null) {
                 temp.setQuantity(temp.getQuantity() + tr.getQuantity());
                // System.out.println("Got tem="+temp.getQuantity()+" tr="+tr.getQuantity());
@@ -492,7 +565,7 @@ public class BillingController implements Initializable {
         return;
     }
     void setItem(Item item){
-        System.out.println("in set item"+item);
+
         if(item==null){
             txtCategory.setText("");
             txtItem.setText("");
@@ -537,23 +610,30 @@ public class BillingController implements Initializable {
             button.setAccessibleText(table.getTableGroup().getGroupname());
            // button.setPrefWidth(60);
             button.setOnAction(e->tableButtonAction(e));
+           // button.setMaxHeight(100);
+            button.setMinHeight(40);
             button.getStyleClass().add("tablebutton");
             tableButtonList.add(button);
         }
         HBox hbox = new HBox();
-        hbox.setStyle("-fx-background-color:#03DAC6");
+        //hbox.setStyle("-fx-background-color:#03DAC6");
+        hbox.setStyle("-fx-background-color:#c8d9ed");
         for(String group:groupService.getAllGroupNames()){
             TilePane tp = new TilePane();
             StackPane titlePane = new StackPane();
-            titlePane.setStyle("-fx-background-color:#03DAC6");
+            //titlePane.setStyle("-fx-background-color:#03DAC6");
+            titlePane.setStyle("-fx-background-color:#71c7ec");;
+            titlePane.setStyle("-fx-background-color:#c8d9ed");;
             Label label = new Label(group);
-            label.setFont(Font.font("Georgia", FontWeight.BOLD, FontPosture.ITALIC, 16));
+            label.setFont(Font.font("Georgia", FontWeight.BOLD, FontPosture.ITALIC, 12));
             label.setStyle("-fx-text-fill:white");
             titlePane.getChildren().add(label);
 
-            tp.setHgap(2);
-            tp.setVgap(2);
-            tp.setStyle("-fx-border-color: white; -fx-padding: 5px; -fx-background-color:#03DAC6");
+            tp.setHgap(1.5);
+            tp.setVgap(1.5);
+            tp.setStyle("-fx-border-color: white; -fx-padding: 4px; -fx-background-color:#c8d9ed");
+            //tp.setStyle("-fx-border-color: white; -fx-padding: 4px; -fx-background-color:#71c7ec");
+
             //tp.setStyle("-fx-padding: 10px");
             if(group.equalsIgnoreCase("C") || group.equalsIgnoreCase("D")){
                 hbox.getChildren().add(tp);
@@ -593,14 +673,13 @@ public class BillingController implements Initializable {
     }
     public void tableButtonAction(ActionEvent e){
         Button button = (Button) e.getSource();
-        System.out.println(button.getText());
         btnRunningTable.setText(button.getText());
         table = tableMasterService.getByName(button.getText());
         loadTableData(table);
-        System.out.println(table);
     }
     private void loadTableData(TableMaster table){
         trList.clear();
+        clearBill();
         cmbWaitor.getSelectionModel().clearSelection();
         trList.addAll(tempTransactionService.getByTableId(table.getId()));
         Long id=0L;
@@ -632,6 +711,7 @@ public class BillingController implements Initializable {
                 cmbWaitor.getSelectionModel().select(tr.getEmployee().getNickname());
             }
         //}
+        if(!trList.isEmpty())
         waitor = employeeService.getByNickname(cmbWaitor.getValue());
         calculateNetTotal();
         tableTransaction.refresh();
@@ -660,7 +740,6 @@ public class BillingController implements Initializable {
         for(Button button:tableButtonList){
             if(button.getText().equalsIgnoreCase(table))
             {
-                System.out.println(button.getText());
                 button.setStyle("-fx-background-color:"+color);
                // blink(button);
             }
@@ -673,10 +752,9 @@ public class BillingController implements Initializable {
         List<Transaction> tr = new ArrayList<>();
         if(bill ==null){
             bill = new Bill();
-            System.out.println("creating ne bill");
         }
         else{
-            System.out.println("Not creating ne bill");
+
         }
         bill.setBank(bankService.getById(1L));
         bill.setCustomer(customer);
@@ -687,13 +765,16 @@ public class BillingController implements Initializable {
         bill.setPaid(0.0f);
         bill.setStatus("closed");
         bill.setWaitor(waitor);
+
+            CommonData.login = loginService.validateLogin("Admin","123");
+            System.out.println("Login from common==>"+CommonData.login);
+
         bill.setLogin(CommonData.login.getEmployee());
         bill.setTable(table);
         for(TempTransaction e:tempTransactionService.getByTableId(table.getId())){
             int index =findTempTransactionInTransaction(e,bill.getTransactions());
-            System.out.println("close transaction "+index);
+
             if(index!=-1){
-                System.out.println("changing in transaction "+index);
                 Transaction t = bill.getTransactions().get(index);
                 t.setQuantity(e.getQuantity()+t.getQuantity());
                 bill.getTransactions().remove(index);
@@ -754,7 +835,6 @@ public class BillingController implements Initializable {
             alert.showError("Select Opened Table");
             return false;
         }
-
         return true;
     }
     private void addButtonToTablePlus() {
@@ -795,13 +875,9 @@ public class BillingController implements Initializable {
                 return cell;
             }
         };
-
         colBtn.setCellFactory(cellFactory);
-
         tableTransaction.getColumns().add(colBtn);
-
     }
-
     private void addButtonToTableMinus() {
         TableColumn<TempTransaction, Void> colBtn = new TableColumn("Minus");
 
@@ -865,5 +941,100 @@ public class BillingController implements Initializable {
         tableTransaction.getColumns().add(colBtn);
 
     }
+    private void saveBill(){
+        if(!validateSaveBill()){
+            return;
+        }
+        Bill bill = billService.getClosedBillByTableid(table.getId());
+        bill.setBank(bankService.getByName(cmbBankName.getValue()));
+        if(customer ==null) {
+            bill.setCustomer(customerService.getById(1L));
+            customer = customerService.getById(1L);
+        }
+        else
+        bill.setCustomer(customer);
+        bill.setDate(date.getValue());
+        bill.setDiscount(Float.parseFloat(txtDiscount.getText()));
+        bill.setGrandtotal(Float.parseFloat(txtGrand.getText()));
+        bill.setNetamount(Float.parseFloat(txtNetTotal.getText()));
+        boolean result = true;
+        System.out.println("save bill=>"+customer);
+        if((Float.parseFloat(txtRecieved.getText())+Float.parseFloat(txtDiscount.getText()))<Float.parseFloat(txtGrand.getText()) && customer!=null)
+        {
+            result =  alert.showConfirmation("","Do You Want Add Remaining Amount in Credit?");
+        }
+        if(result)
+            bill.setPaid(Float.parseFloat(txtRecieved.getText()));
+        else
+            return;
+        bill.setStatus("paid");
+        bill.setTable(table);
 
+        if(billService.saveBill(bill)!=null){
+            alert.showSuccess("Bill Saved Success");
+            clearBill();
+        }
+        else {
+            alert.showError("Bill Not Saved");
+        }
+
+
+    }
+    private boolean validateSaveBill() {
+        if(trList.size()==0){
+            alert.showError("No Data To Save");
+            return false;
+        }
+        if(date.getValue()==null){
+            alert.showError("Select Date");
+            return false;
+        }
+        if(tempTransactionService.getByTableId(tableMasterService.getByName(btnRunningTable.getText()).getId()).size()!=0)
+        {
+            alert.showError("Close Table First");
+            return false;
+        }
+        if(cmbBankName.getValue()==null){
+            alert.showError("Select Bank");
+            return false;
+        }
+        if(txtRecieved.getText().isEmpty()){
+            alert.showError("Enter Recieved Amount");
+            txtRecieved.requestFocus();
+            return false;
+        }
+        if(txtDiscount.getText().isEmpty()){
+            txtDiscount.setText(""+0.0f);
+        }
+        if((Float.parseFloat(txtRecieved.getText())+Float.parseFloat(txtDiscount.getText()))<Float.parseFloat(txtGrand.getText()) && customer==null)
+        {
+           boolean result =  alert.showConfirmation("","Do You Want Add Remaining Amount in Discount?");
+            if(result){
+                txtDiscount.setText(
+                        String.valueOf((Float.parseFloat(txtGrand.getText())-Float.parseFloat(txtRecieved.getText()))));
+                calculateGrandTotal();
+                txtRemaining.setText(String.valueOf(Float.parseFloat(txtRecieved.getText())-Float.parseFloat(txtGrand.getText())));
+                return true;
+            }
+            else
+                return false;
+        }
+        return true;
+    }
+    private void clearBill()
+    {
+        trList.clear();
+        txtNetTotal.setText(""+0.0f);
+        txtDiscount.setText(""+0.0f);
+        txtGrand.setText(""+0.0f);
+        txtOther.setText(""+0.0f);
+        txtRecieved.setText(""+0.0f);
+        txtRemaining.setText("");
+        customer = null;
+        waitor = null;
+        item = null;
+        cmbBankName.getSelectionModel().clearSelection();
+        cmbBankName.getSelectionModel().select(1);
+        date.setValue(LocalDate.now());
+    }
 }

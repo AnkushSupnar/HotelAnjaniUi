@@ -3,29 +3,31 @@
     -fx-font-family: 'kiran';
     -fx-text-fill: #ffffff;
     -fx-background-color:#6200ee;
+    -fx-background-color:#107dac;
      -fx-border-radius:10px;
      -fx-background-radius:10px;
-     -fx-border-color:#6200ee;
+     -fx-border-color:#107dac;
   }
   .button .glyph-icon{
       -fx-fill:#ffffff;
+      -fx-size:1em;
     }
 
 
   .button:hover{
       -fx-background-color:white;
-      -fx-text-fill: #6200ee;
-      -fx-border-color:#6200ee;
+      -fx-text-fill: #107dac;
+      -fx-border-color:#107dac;
       -fx-border-radius:10px;
       -fx-background-radius:10px;
     }
  .button:hover .glyph-icon{
-    -fx-fill: #6200ee;
+    -fx-fill: #107dac;
   }
   .button:pressed .glyph-icon{
       -fx-fill:#ffffff;
   }
   .button:pressed{
      -fx-text-fill: #ffffff;
-     -fx-background-color:#6200ee;
+     -fx-background-color:#005073;
     }

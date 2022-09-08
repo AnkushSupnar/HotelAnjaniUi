@@ -28,6 +28,7 @@ public class BankService {
         return Arrays.asList(template.getForObject(CommonData.url+"/bank/all",Bank[].class));
     }
     public Bank getByName(String name){
+        System.out.println(CommonData.url+"/bank/byname/"+name);
         return template.getForObject(CommonData.url+"/bank/byname/{name}",Bank.class,name);
     }
     public Bank getById(Long id){

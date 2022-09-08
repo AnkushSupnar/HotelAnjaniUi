@@ -25,6 +25,7 @@ public class TempTransactionService {
         return Arrays.asList(template.getForObject(CommonData.url+"/temptransation/all",TempTransaction[].class));
     }
     public List<TempTransaction>getByTableId(Integer tableid){
+        System.out.println(CommonData.url+"/temptransaction/bytableid/"+tableid);
         return Arrays.asList(template.getForObject(CommonData.url+"/temptransaction/bytableid/{tableid}",TempTransaction[].class,tableid));
     }
     public TempTransaction save(TempTransaction temp){

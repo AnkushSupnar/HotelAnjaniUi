@@ -29,7 +29,7 @@ public class CategoryService {
         return Arrays.asList(template.getForObject(url+"/category/getall",Category[].class));
     }
     public List<String>getAllCategoryNames(){
-        System.out.println(url+"/category/allname");
+        System.out.println(url+"/category/allnames");
         return Arrays.asList(template.getForObject(url+"/category/allnames",String[].class));
     }
     public Category getById(Long id){

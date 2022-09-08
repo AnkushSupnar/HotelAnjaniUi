@@ -37,7 +37,7 @@ public enum FxmlView {
     BILLING {
         @Override
         String getTitle() {
-            return "Kirana Page";
+            return "Daily Billing                                Developed By Ankush 9960857742";
         }
         @Override
         public String getFxmlFile() {

@@ -26,6 +26,7 @@ public class TableMasterService {
         return template.getForObject(CommonData.url+"/tablemaster/byid/{id}",TableMaster.class,id);
     }
     public TableMaster getByName(String name){
+        System.out.println(CommonData.url+"/tablemaster/byname/"+name);
         return template.getForObject(CommonData.url+"/tablemaster/byname/{name}",TableMaster.class,name);
     }
     public List<String> getAllNames(){

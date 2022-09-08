@@ -13,11 +13,11 @@ src: url(kiran.ttf);
    -fx-alignment: center;
 }
 .table-view .cell{
-   -fx-cell-size: 35;
+   /*-fx-cell-size: 35;*/
   -fx-alignment: center-left;
   -fx-alignment: CENTER_LEFT;
   -fx-font-family:'kiran';
-  -fx-font-size: 25;
+  -fx-font-size: 22;
 
 }
 

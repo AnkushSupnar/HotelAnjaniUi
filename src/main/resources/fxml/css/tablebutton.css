@@ -1,21 +1,21 @@
 .tablebutton{
-    -fx-background-color:#6200ee;
-    -fx-background-color:#3700B3;
-    -fx-text-fill: #ffffff;
-    -fx-font-size:14px;
-    -fx-font-weight:bold;
-    -fx-border-color:#6200ee;
-    -fx-background-radius:10px;
-    -fx-border-radius:10px
+   -fx-font-size: 15;
+   -fx-font-weight:bold;
+       -fx-text-fill: #ffffff;
+       -fx-background-color:#6200ee;
+       -fx-background-color:#107dac;
+        -fx-border-radius:10px;
+        -fx-background-radius:10px;
+        -fx-border-color:#107dac;
 }
 .tablebutton:hover{
-    -fx-text-fill: #6200ee;
     -fx-background-color:white;
-     -fx-border-color:#6200ee;
-    -fx-border-radius:10px;
-    -fx-background-radius:10px;
+         -fx-text-fill: #107dac;
+         -fx-border-color:#107dac;
+         -fx-border-radius:10px;
+         -fx-background-radius:10px;
    }
  .tablebutton:pressed{
    -fx-text-fill: #ffffff;
-   -fx-background-color:#6200ee;
+        -fx-background-color:#005073;
  }

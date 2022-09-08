@@ -21,12 +21,12 @@ public class RestTemplateResponseErrorHandler implements ResponseErrorHandler {
             System.out.println("Server Error");
         }
         else if(response.getStatusCode().series()==HttpStatus.Series.CLIENT_ERROR){
-            System.out.println("Handle Client Error");
+            System.out.println("Handle Client Error"+response.getStatusCode());
                 if(response.getStatusCode()==HttpStatus.NOT_FOUND){
                     try {
                         throw new NotFoundException(""+response.getStatusCode());
                     } catch (NotFoundException e) {
-                      //  e.printStackTrace();
+                        e.printStackTrace();
                     }
 
                     System.out.println("Not Found");

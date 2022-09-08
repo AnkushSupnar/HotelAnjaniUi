@@ -29,6 +29,7 @@ public class BillService {
        return Arrays.asList(template.getForObject(CommonData.url+"/customerunpaid/{cid}/{paid}",Bill[].class,id,paid));
     }
     public Bill saveBill(Bill bill){
+        System.out.println(CommonData.url+"/bill/save");
        return template.postForObject(CommonData.url+"/bill/save",bill,Bill.class);
     }
     public List<Bill>getByStatus(String status){

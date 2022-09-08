@@ -7,6 +7,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -19,14 +20,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane fx:id="mainPane" dividerPositions="0.3064812385200735, 0.816845972185778" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="781.0" prefWidth="1526.0" stylesheets="@../css/tablebutton.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.transaction.BillingController">
+<SplitPane fx:id="mainPane" dividerPositions="0.3143531881395959, 0.8378378378378378" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="781.0" prefWidth="1526.0" stylesheets="@../css/tablebutton.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anjani.controller.transaction.BillingController">
   <items>
     <AnchorPane fx:id="paneTable" minHeight="0.0" minWidth="0.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
          <children>
             <VBox fx:id="tableGroupBox" layoutX="144.0" layoutY="102.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
-    <AnchorPane fx:id="paneBilling" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+    <AnchorPane fx:id="paneBilling" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="762.0">
          <children>
             <Pane layoutX="106.0" layoutY="56.0" prefHeight="97.0" prefWidth="645.0" styleClass="box" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
@@ -37,7 +38,7 @@
                      <children>
                         <Label styleClass="label-marathi" text="ga`ahkacao naava">
                            <HBox.margin>
-                              <Insets top="5.0" />
+                              <Insets top="7.0" />
                            </HBox.margin>
                         </Label>
                         <TextField fx:id="txtCustomer" prefHeight="39.0" prefWidth="270.0" styleClass="text-field-marathi" />
@@ -54,7 +55,7 @@
                         </Button>
                      </children>
                   </HBox>
-                  <Button fx:id="btnRunningTable" layoutX="648.0" layoutY="3.0" mnemonicParsing="false" prefHeight="82.0" prefWidth="119.0" style="-fx-background-color: white; -fx-border-color: #1ee418; -fx-border-width: 5px; -fx-border-radius: 10px;" stylesheets="@../css/tablebutton.css" text="Table" textFill="#1ee418">
+                  <Button fx:id="btnRunningTable" layoutX="639.0" layoutY="3.0" mnemonicParsing="false" prefHeight="82.0" prefWidth="119.0" style="-fx-background-color: white; -fx-border-color: #1ee418; -fx-border-width: 5px; -fx-border-radius: 10px;" stylesheets="@../css/tablebutton.css" text="Table" textFill="#1ee418">
                      <font>
                         <Font name="System Bold Italic" size="25.0" />
                      </font></Button>
@@ -120,18 +121,18 @@
             </Pane>
             <TableView fx:id="tableTransaction" layoutY="197.0" prefHeight="275.0" prefWidth="645.0" stylesheets="@../css/table.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
               <columns>
-                <TableColumn fx:id="colSrNo" prefWidth="56.000059485435486" text="Sr.No" />
-                <TableColumn fx:id="colItemName" prefWidth="280.7999954223633" text="Item Name" />
-                  <TableColumn fx:id="colQuantity" prefWidth="96.0" text="Quantity" />
-                  <TableColumn fx:id="colRate" prefWidth="99.19998168945312" text="Rate" />
-                  <TableColumn fx:id="colAmount" prefWidth="110.40008544921875" text="Amount" />
+                <TableColumn fx:id="colSrNo" prefWidth="40.80004805326462" text="Sr.No" />
+                <TableColumn fx:id="colItemName" prefWidth="275.1999397277832" text="Item Name" />
+                  <TableColumn fx:id="colQuantity" prefWidth="97.60003662109375" text="Quantity" />
+                  <TableColumn fx:id="colRate" prefWidth="89.5999755859375" text="Rate" />
+                  <TableColumn fx:id="colAmount" prefWidth="110.4000244140625" text="Amount" />
               </columns>
             </TableView>
             <Pane layoutY="474.0" prefHeight="150.0" prefWidth="772.0" styleClass="box" stylesheets="@../css/box.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
                   <HBox layoutX="6.0" layoutY="19.0" spacing="10.0">
                      <children>
-                        <TextField fx:id="txtNetTotal" prefWidth="150.0" text="10000">
+                        <TextField fx:id="txtNetTotal" prefWidth="150.0">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
@@ -161,7 +162,7 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="txtRemaining" prefWidth="150.0">
+                        <TextField fx:id="txtRemaining" editable="false" prefWidth="150.0">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
@@ -232,18 +233,33 @@
          </children></AnchorPane>
       <AnchorPane fx:id="paneItem" layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
-            <TabPane layoutX="30.0" layoutY="108.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TabPane fx:id="tabpaneItem" layoutX="30.0" layoutY="108.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <tabs>
-                <Tab text="Untitled Tab 1">
+                <Tab fx:id="tabCategory" style="-fx-font-family: kiran; -fx-font-size: 25;" text="k^ToigarI">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <ListView fx:id="listCategory" layoutX="22.0" layoutY="63.0" prefHeight="200.0" prefWidth="200.0" style="-fx-font-family: kiran; -fx-font-size: 20;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children></AnchorPane>
                   </content>
                 </Tab>
-                <Tab text="Untitled Tab 2">
+                <Tab fx:id="tabItem" closable="false" style="-fx-font-family: kiran; -fx-font-size: 25;" text="maala">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <ListView fx:id="listItem" layoutX="22.0" layoutY="47.0" prefHeight="200.0" prefWidth="200.0" style="-fx-font-family: kiran; -fx-font-size: 20;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children></AnchorPane>
                   </content>
                 </Tab>
+                  <Tab fx:id="tabQuantity" style="-fx-font-family: kiran; -fx-font-size: 25;" text="naga">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <ListView fx:id="listQuantity" fixedCellSize="70.0" layoutX="22.0" layoutY="47.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
               </tabs>
             </TabPane>
          </children></AnchorPane>
