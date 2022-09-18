@@ -19,3 +19,12 @@
    -fx-text-fill: #ffffff;
         -fx-background-color:#005073;
  }
+
+ .combo-box > .list-cell {
+ -fx-background: #107dac;
+ -fx-background-color: #107dac;
+ -fx-text-fill: white;
+ -fx-border-radius:10px;
+ -fx-background-radius:10px;
+ -fx-border-color:#107dac;
+ }

@@ -7,6 +7,7 @@ import com.anjani.data.common.CommonData;
 import com.anjani.data.common.Convertor;
 import com.anjani.data.entity.*;
 import com.anjani.data.service.*;
+import com.anjani.print.PrintBill;
 import com.anjani.print.PrintQt;
 import com.anjani.view.AlertNotification;
 import com.anjani.view.StageManager;
@@ -64,17 +65,15 @@ public class BillingController implements Initializable {
     @FXML private TableColumn<TempTransaction,Long> colSrNo;
     @FXML private TableColumn<TempTransaction,Float> colAmount;
 
-    @FXML private TableView<?> tableOldBill;
-    @FXML private TableColumn<?, ?> colBillAmount;
-    @FXML private TableColumn<?, ?> colBillNo;
-    @FXML private TableColumn<?, ?> colCash;
-    @FXML private TableColumn<?, ?> colCustomerName;
-    @FXML private TableColumn<?, ?> colDiscount;
-    @FXML private TableColumn<?, ?> colGrandTotal;
-    @FXML private TableColumn<?, ?> colGrandTotal1;
+    @FXML private TableView<Bill> tableOldBill;
+    @FXML private TableColumn<Bill,Number> colBillAmount;
+    @FXML private TableColumn<Bill,Number> colBillNo;
+    @FXML private TableColumn<Bill,String> colCash;
+    @FXML private TableColumn<Bill,String> colCustomerName;
+    @FXML private TableColumn<Bill,Number> colDiscount;
+    @FXML private TableColumn<Bill,Number> colGrandTotal;
+    @FXML private TableColumn<Bill,Number> colRecieved;
     @FXML private DatePicker date;
-
-
     @FXML private TextField txtAmount,txtCategory,txtCustomer,txtItem,txtCode;
     @FXML private TextField txtDiscount,txtGrand;
     @FXML private TextField txtNetTotal;
@@ -82,7 +81,6 @@ public class BillingController implements Initializable {
     @FXML private TextField txtPhone,txtQuantity,txtRate;
     @FXML private TextField txtRecieved,txtRemaining;
     @FXML private ComboBox<String> cmbWaitor;
-
     @FXML
     private ListView<String> listCategory;
     @FXML
@@ -97,8 +95,14 @@ public class BillingController implements Initializable {
     private Tab tabQuantity;
     @FXML
     private Tab tabItem;
-
-
+    @FXML
+    private ComboBox<Integer> cmbPageSize;
+    @FXML
+    private Button btnNext;
+    @FXML
+    private Button btnPrev;
+    @FXML
+    private Label lblPageNo;
     @Autowired private TableGroupService groupService;
     @Autowired private TableMasterService tableMasterService;
     @Autowired private ItemService itemService;
@@ -127,8 +131,12 @@ public class BillingController implements Initializable {
     private Employee waitor;
     FadeTransition ft;
     private ObservableList<TempTransaction>trList = FXCollections.observableArrayList();
+    private ObservableList<Bill>oldBillList = FXCollections.observableArrayList();
+    @Autowired
+    PrintBill printBill;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         waitor = null;
         customer =null;
         date.setValue(LocalDate.now());
@@ -139,6 +147,8 @@ public class BillingController implements Initializable {
         addButtonToTablePlus();
         addButtonToTableMinus();
         loadCategoryList();
+
+
     }
     private void loadCategoryList(){
         catObsList.addAll(categoryService.getAllCategoryNames());
@@ -219,6 +229,18 @@ public class BillingController implements Initializable {
         colSrNo.setCellValueFactory(new PropertyValueFactory<>("id"));
         colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         tableTransaction.setItems(trList);
+
+        colBillAmount.setCellValueFactory(new PropertyValueFactory<>("netamount"));
+        colBillNo.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colCash.setCellValueFactory(cellData->new SimpleStringProperty(cellData.getValue().getPaid()>0?"Cash":"Credit"));
+        colCustomerName.setCellValueFactory(cellData->new SimpleStringProperty(cellData.getValue().getCustomer().getId()==1?"":cellData.getValue().getCustomer().getName()));
+        colDiscount.setCellValueFactory(new PropertyValueFactory<>("discount"));
+        colGrandTotal.setCellValueFactory(new PropertyValueFactory<>("grandtotal"));
+        colRecieved.setCellValueFactory(new PropertyValueFactory<>("paid"));
+        loadOldBill(Integer.parseInt(lblPageNo.getText()),50);
+        tableOldBill.setItems(oldBillList);
+
+
         cmbWaitor.setOnAction(e->{
             if(cmbWaitor.getValue()!=null){
                 waitor = employeeService.getByNickname(cmbWaitor.getValue());
@@ -363,8 +385,31 @@ public class BillingController implements Initializable {
 
         btnClose.setOnAction(e->closeBill());
         btnSave.setOnAction(e->saveBill());
+        cmbPageSize.getItems().add(10);
+        cmbPageSize.getItems().add(20);
+        cmbPageSize.getItems().add(25);
+        cmbPageSize.getItems().add(50);
+        cmbPageSize.getItems().add(100);
+        cmbPageSize.getSelectionModel().select(2);
+        lblPageNo.setText("0");
+        btnPrev.setOnAction(e->{
+               if(!lblPageNo.getText().equals("0")) lblPageNo.setText(String.valueOf(Integer.parseInt(lblPageNo.getText())-1));
+            loadOldBill(Integer.parseInt(lblPageNo.getText()),cmbPageSize.getValue());
+        });
+        btnNext.setOnAction(e->{
+            lblPageNo.setText(""+(Integer.parseInt(lblPageNo.getText())+1));
+            loadOldBill(Integer.parseInt(lblPageNo.getText()),cmbPageSize.getValue());
+        });
+        cmbPageSize.setOnAction(e->{
+            loadOldBill(Integer.parseInt(lblPageNo.getText()),cmbPageSize.getValue());
+        });
 
     }
+    void loadOldBill(int offset,int pagesize){
+        oldBillList.clear();
+        oldBillList.addAll(billService.getBillWithPagination(offset,pagesize));
+    }
+
     private void order() {
         if(table == null){
             alert.showError("Select Table First");
@@ -942,6 +987,7 @@ public class BillingController implements Initializable {
 
     }
     private void saveBill(){
+
         if(!validateSaveBill()){
             return;
         }
@@ -971,6 +1017,9 @@ public class BillingController implements Initializable {
         bill.setTable(table);
 
         if(billService.saveBill(bill)!=null){
+            printBill.setBill(bill);
+            printBill.print();
+            getOpenTable();
             alert.showSuccess("Bill Saved Success");
             clearBill();
         }

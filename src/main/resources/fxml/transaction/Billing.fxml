@@ -167,11 +167,7 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </TextField>
-                     </children>
-                  </HBox>
-                  <HBox layoutX="14.0" layoutY="110.0" spacing="10.0">
-                     <children>
-                        <Button fx:id="btnClose" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" stylesheets="@../css/button.css" text="\@laaoja">
+                        <Button fx:id="btnClose" mnemonicParsing="false" stylesheets="@../css/button.css" text="\@laaoja">
                            <graphic>
                               <FontAwesomeIcon glyphName="CLOSE" />
                            </graphic>
@@ -186,6 +182,10 @@
                               <FontAwesomeIcon glyphName="EDIT" />
                            </graphic>
                         </Button>
+                     </children>
+                  </HBox>
+                  <HBox layoutX="14.0" layoutY="110.0" spacing="10.0">
+                     <children>
                         <Button fx:id="btnClearBill" mnemonicParsing="false" stylesheets="@../css/button.css" text="i@laAr">
                            <graphic>
                               <FontAwesomeIcon glyphName="RECYCLE" />
@@ -211,6 +211,37 @@
                               <FontAwesomeIcon glyphName="HOME" />
                            </graphic>
                         </Button>
+                        <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="299.0">
+                           <children>
+                              <Label contentDisplay="BOTTOM" prefHeight="100.0" text="Last Bill/Page" />
+                              <ComboBox fx:id="cmbPageSize" prefHeight="100.0" prefWidth="85.0" promptText="25" styleClass="combo-box">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </ComboBox>
+                              <Label fx:id="lblPageNo" text="0">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="btnPrev" mnemonicParsing="false" prefHeight="100.0" styleClass="tablebutton" text="&lt;">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="btnNext" layoutX="139.0" layoutY="13.0" mnemonicParsing="false" prefHeight="100.0" styleClass="tablebutton" text="&gt;">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
                      </children>
                   </HBox>
                   <Label layoutX="14.0" layoutY="2.0" text="Net Total" />
@@ -225,9 +256,9 @@
                 <TableColumn fx:id="colBillAmount" prefWidth="75.0" text="Bill Amount" />
                   <TableColumn fx:id="colDiscount" prefWidth="70.39996337890625" text="Discount" />
                   <TableColumn fx:id="colGrandTotal" prefWidth="79.19996643066406" text="Grand Total" />
-                  <TableColumn fx:id="colGrandTotal1" prefWidth="75.2000732421875" text="Recieved" />
-                  <TableColumn fx:id="colCustomerName" prefWidth="194.39990234375" text="Customer Name" />
-                  <TableColumn fx:id="colCash" prefWidth="72.800048828125" text="Cash/Credit" />
+                  <TableColumn fx:id="colRecieved" prefWidth="75.2000732421875" text="Recieved" />
+                  <TableColumn fx:id="colCustomerName" prefWidth="280.0" text="Customer Name" />
+                  <TableColumn fx:id="colCash" prefWidth="92.800048828125" text="Cash/Credit" />
               </columns>
             </TableView>
          </children></AnchorPane>

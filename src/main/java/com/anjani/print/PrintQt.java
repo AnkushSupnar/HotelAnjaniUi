@@ -26,6 +26,7 @@ public class PrintQt {
     Font f4 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED, 20f, Font.NORMAL, BaseColor.BLACK);
     Font f5 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED, 18f, Font.BOLD, BaseColor.BLACK);
     Font fe = FontFactory.getFont("Gill Sans Ultra Bold", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED, 18f, Font.BOLD, BaseColor.BLACK);
+
     public PrintQt(){}
     public void printQt(List<TempTransaction> list){
         this.list = list;

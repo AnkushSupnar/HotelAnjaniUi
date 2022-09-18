@@ -20,7 +20,8 @@ public class BillService {
                 .errorHandler(new RestTemplateResponseErrorHandler()).build();
     }
     public Bill getByBillno(Long billno){
-        return template.getForObject(CommonData.url+"/bill/bybillno/{billno}"+billno,Bill.class,billno);
+        System.out.println("Got bill no "+billno);
+        return template.getForObject(CommonData.url+"/bill/bybillno/"+billno,Bill.class,billno);
     }
     public List<Bill> getByDate(LocalDate date){
         return Arrays.asList(template.getForObject(CommonData.url+"/bill/{date}",Bill[].class,date));
@@ -46,5 +47,8 @@ public class BillService {
     }
     public Bill deleteCloseBillTransaction(long billno){
         return template.getForObject(CommonData.url+"/bill/bybilldeletetransaction/{billno}",Bill.class,billno);
+    }
+    public List<Bill>getBillWithPagination(int offset,int pageSize){
+        return Arrays.asList(template.getForObject(CommonData.url+"/bill/bybillpagination/{offset}/{pageSize}",Bill[].class,offset,pageSize));
     }
 }
