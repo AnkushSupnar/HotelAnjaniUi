@@ -403,7 +403,7 @@ public class BillingController implements Initializable {
         cmbPageSize.setOnAction(e->{
             loadOldBill(Integer.parseInt(lblPageNo.getText()),cmbPageSize.getValue());
         });
-
+        btnUpdateBill.setOnAction(e->updateBill());
     }
     void loadOldBill(int offset,int pagesize){
         oldBillList.clear();
@@ -1004,7 +1004,7 @@ public class BillingController implements Initializable {
         bill.setGrandtotal(Float.parseFloat(txtGrand.getText()));
         bill.setNetamount(Float.parseFloat(txtNetTotal.getText()));
         boolean result = true;
-        System.out.println("save bill=>"+customer);
+
         if((Float.parseFloat(txtRecieved.getText())+Float.parseFloat(txtDiscount.getText()))<Float.parseFloat(txtGrand.getText()) && customer!=null)
         {
             result =  alert.showConfirmation("","Do You Want Add Remaining Amount in Credit?");
@@ -1055,9 +1055,9 @@ public class BillingController implements Initializable {
         if(txtDiscount.getText().isEmpty()){
             txtDiscount.setText(""+0.0f);
         }
-        if((Float.parseFloat(txtRecieved.getText())+Float.parseFloat(txtDiscount.getText()))<Float.parseFloat(txtGrand.getText()) && customer==null)
+        if((Float.parseFloat(txtRecieved.getText())+Float.parseFloat(txtDiscount.getText()))<Float.parseFloat(txtGrand.getText()) && customer==null )
         {
-           boolean result =  alert.showConfirmation("","Do You Want Add Remaining Amount in Discount?");
+           boolean result =  alert.showConfirmation("","Do You Want Add Remaining Amount in Discount?????");
             if(result){
                 txtDiscount.setText(
                         String.valueOf((Float.parseFloat(txtGrand.getText())-Float.parseFloat(txtRecieved.getText()))));
@@ -1085,5 +1085,14 @@ public class BillingController implements Initializable {
         cmbBankName.getSelectionModel().clearSelection();
         cmbBankName.getSelectionModel().select(1);
         date.setValue(LocalDate.now());
+    }
+    private void updateBill(){
+        if(tableOldBill.getSelectionModel().getSelectedItem()==null){
+            return;
+        }
+        Bill bill = tableOldBill.getSelectionModel().getSelectedItem();
+        bill = billService.getByBillno(bill.getId());
+
+
     }
 }

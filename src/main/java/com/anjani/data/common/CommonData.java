@@ -17,6 +17,7 @@ public class CommonData {
             Properties prop = new Properties();
             prop.load(reader);
             url = prop.getProperty("url");
+           // url="http://localhost:8282";
             System.out.println("Property Read Success "+url);
         }catch(Exception e){
             e.printStackTrace();

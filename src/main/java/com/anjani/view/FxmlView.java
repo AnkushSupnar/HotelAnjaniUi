@@ -32,8 +32,17 @@ public enum FxmlView {
         public String getFxmlFile() {
             return "/fxml/transaction/Kirana.fxml";
         }
-    }
-    ,
+    },
+    PARTY {
+        @Override
+        String getTitle() {
+            return "Add Purchase Party";
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/create/CreatePurchaseParty.fxml";
+        }
+    },
     BILLING {
         @Override
         String getTitle() {

@@ -124,6 +124,16 @@
                                           </Label>
                                        </children>
                                     </HBox>
+                                    <HBox fx:id="menuAddParty" layoutX="10.0" layoutY="173.0" prefHeight="30.0" prefWidth="214.0" spacing="10.0" styleClass="menu">
+                                       <children>
+                                          <FontAwesomeIcon glyphName="TABLE" />
+                                          <Label styleClass="name" text="naivana paaTI-" HBox.hgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Kiran" size="25.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
                                  </children>
                               </VBox>
                            </children>

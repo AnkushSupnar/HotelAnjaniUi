@@ -5,9 +5,11 @@ import com.anjani.view.FxmlView;
 import com.anjani.view.StageManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -35,7 +37,7 @@ public class HomeController implements Initializable {
     @FXML private HBox menuEmployee;
     @FXML private HBox menuAddCustomer;
     @FXML private HBox menuAddBank;
-
+    @FXML private HBox menuAddParty;
 
     private Pane center;
     @Override
@@ -138,6 +140,16 @@ public class HomeController implements Initializable {
             if(clickedButton.get()==ButtonType.FINISH){
                 System.out.println("Finished");
             }
+        });
+        menuAddParty.setOnMouseClicked(e->{
+            center = stageManager.getFxmlLoader().getPage("/fxml/create/CreatePurchaseParty.fxml");
+
+            Node node = mainPane.getCenter();
+            AnchorPane.setBottomAnchor(center,0d);
+            AnchorPane.setLeftAnchor(center,0d);
+            AnchorPane.setBottomAnchor(center,0d);
+            AnchorPane.setRightAnchor(center,0d);
+            mainPane.setCenter(center);
         });
     }
 }

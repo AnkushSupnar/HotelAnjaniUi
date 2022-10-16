@@ -27,7 +27,7 @@ public class PrintBill {
     Font f1 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 30f, Font.BOLD);//, BaseColor.BLACK);
     Font f2 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 28f, Font.NORMAL, BaseColor.BLUE);
     Font f3 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 20f, Font.BOLD, BaseColor.BLACK);
-    Font f4 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED, 20f, Font.NORMAL, BaseColor.BLACK);
+    Font f4 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED, 14f, Font.NORMAL, BaseColor.BLACK);
     Font f5 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED, 16f, Font.NORMAL, BaseColor.BLACK);
     Font fe = FontFactory.getFont("Gill Sans Ultra Bold", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED, 18f, Font.BOLD, BaseColor.BLACK);
     Font fdate = FontFactory.getFont("Gill Sans Ultra Bold", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED, 18f, Font.NORMAL, BaseColor.BLACK);
@@ -52,7 +52,7 @@ public class PrintBill {
     }
     private void createDocument(PdfPTable table) throws FileNotFoundException, DocumentException {
         Rectangle pagesize = new Rectangle(table.getTotalWidth(), 150f+table.getTotalHeight());
-        doc = new Document(pagesize, 0f, 0f, 2f, 1f);
+        doc = new Document(pagesize, 0f, 0f, -1f, 1f);
         OutputStream out = new FileOutputStream(new File(fileName));
         PdfWriter write =  PdfWriter.getInstance(doc, out);
         doc.open();
@@ -100,7 +100,7 @@ public class PrintBill {
         tableData.addCell(c);
 
         c = new PdfPCell(new Paragraph("id. "+bill.getDate().format( DateTimeFormatter.ofPattern("dd:MM:yyyy")),f4));
-        c.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        c.setHorizontalAlignment(Element.ALIGN_CENTER);
         c.setBorder(PdfPCell.NO_BORDER);
         tableData.addCell(c);
 
@@ -132,7 +132,7 @@ public class PrintBill {
     private PdfPTable addData() throws DocumentException {
 
         PdfPTable table = new PdfPTable(4);
-        table.setTotalWidth(new float[]{130, 40,40,40});
+        table.setTotalWidth(new float[]{100, 30,30,50});
         table.setWidthPercentage(100);
 
         PdfPCell c1 = new PdfPCell(new Paragraph("maalaacao naava ", f4));
@@ -224,14 +224,14 @@ public class PrintBill {
         c1.setBorder(PdfPCell.NO_BORDER);
         tableFooter.addCell(c1);
 
-        c1 = new PdfPCell(new Paragraph("*************Thank you Visit Again*************", footer));
+        c1 = new PdfPCell(new Paragraph("Thank you Visit Again", footer));
         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
         c1.setVerticalAlignment(Element.ALIGN_CENTER);
         c1.setBorder(PdfPCell.TOP);
         c1.setColspan(4);
         tableFooter.addCell(c1);
 
-        c1 = new PdfPCell(new Paragraph("Software Developed By Ankush Supnar(8329394603,9960855742)", footer2));
+        c1 = new PdfPCell(new Paragraph("Software Developed By Ankush Supnar (8329394603,9960855742)", footer2));
         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
         c1.setVerticalAlignment(Element.ALIGN_CENTER);
         c1.setBorder(PdfPCell.TOP);
@@ -249,5 +249,6 @@ public class PrintBill {
 
         return table;
     }
+
 
 }

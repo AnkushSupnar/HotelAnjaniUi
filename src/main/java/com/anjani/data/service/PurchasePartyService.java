@@ -22,7 +22,7 @@ public class PurchasePartyService {
     }
     public List<PurchaseParty> getAllPurchaseParty(){
         return Arrays.asList(
-                template.getForObject(CommonData.url+"/purchaseparty/getall",PurchaseParty[].class));
+                template.getForObject(CommonData.url+"/purchaseparty/all",PurchaseParty[].class));
     }
     public List<String>getAllPartyNames(){
         return Arrays.asList(

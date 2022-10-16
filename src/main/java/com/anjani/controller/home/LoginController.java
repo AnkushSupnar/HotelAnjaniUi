@@ -36,7 +36,6 @@ public class LoginController implements Initializable {
         CommonData.readFile();
         cmbUserName.getItems().addAll(loginService.getAllUserNames());
         btnLogin.setOnAction(e->login());
-
     }
 
     private void login() {
